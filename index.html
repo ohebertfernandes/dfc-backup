@@ -40,7 +40,7 @@
     </style>
 
     <script>
-        // Funções de Segurança Globais Iniciais
+        // Funções Globais de Segurança (Disponíveis imediatamente)
         window.escapeHTML = function(str) {
             if (str === null || str === undefined) return '';
             return String(str)
@@ -75,7 +75,7 @@
             }, 3500);
         };
 
-        // Stub Protetor - Impede que erros ocorram se o utilizador clicar em algo enquanto o Firebase carrega
+        // Prevenção de quebra de botões durante o loading do Firebase
         window.appActions = {};
         const stubAction = function() { window.showToast("A carregar base de dados, aguarde...", "error"); };
         const fnNames = ['handleEmailAuth', 'loginWithGoogle', 'loginAnonymously', 'toggleAuthMode', 'changeTab', 'toggleMobileMenu', 'setFilterMode', 'setMemberChart', 'closeModal', 'saveClient', 'darBaixa', 'removeBaixa', 'openItemModal', 'toggleItemType', 'saveItem', 'deleteItem', 'openMemberDashboard', 'lockMonth', 'openHistoryModal', 'saveHistory', 'addTeamAllocationRow', 'setClientFilter', 'updateProfilePhoto', 'saveProfile', 'logout', 'updateSelectedMonth', 'updateSelectedYear'];
@@ -88,7 +88,6 @@
     <div id="login-screen" class="min-h-screen bg-[#0a0a0a] flex flex-col items-center justify-center p-4 transition-all duration-700">
         <div class="w-full max-w-md bg-[#141414] border border-[#2a2a2a] rounded-2xl p-8 shadow-2xl animate-scale-in relative overflow-hidden">
             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-900 via-red-500 to-red-900 opacity-50"></div>
-            
             <div class="flex justify-center mb-8">
                 <div class="w-16 h-16 bg-red-600 rounded-xl flex items-center justify-center font-bold text-white text-3xl shadow-lg shadow-red-600/30 transition-transform hover:scale-105">S</div>
             </div>
@@ -98,15 +97,15 @@
             <form id="auth-form" onsubmit="event.preventDefault(); window.appActions.handleEmailAuth();" class="space-y-5">
                 <div id="name-field" class="hidden animate-fade-in">
                     <label class="block text-xs font-bold text-gray-500 mb-1 uppercase tracking-wider">Nome Completo</label>
-                    <input type="text" id="login-name" class="w-full bg-[#0a0a0a] border border-[#333] rounded-lg p-3.5 text-white focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all outline-none" placeholder="Como quer ser chamado?" />
+                    <input type="text" id="login-name" class="w-full bg-[#0a0a0a] border border-[#333] rounded-lg p-3.5 text-white focus:border-red-500 transition-all outline-none" placeholder="Como quer ser chamado?" />
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-gray-500 mb-1 uppercase tracking-wider">E-mail</label>
-                    <input type="email" id="login-email" required class="w-full bg-[#0a0a0a] border border-[#333] rounded-lg p-3.5 text-white focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all outline-none" placeholder="seu@email.com" />
+                    <input type="email" id="login-email" required class="w-full bg-[#0a0a0a] border border-[#333] rounded-lg p-3.5 text-white focus:border-red-500 transition-all outline-none" placeholder="seu@email.com" />
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-gray-500 mb-1 uppercase tracking-wider">Senha</label>
-                    <input type="password" id="login-password" required class="w-full bg-[#0a0a0a] border border-[#333] rounded-lg p-3.5 text-white focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all outline-none" placeholder="••••••••" />
+                    <input type="password" id="login-password" required class="w-full bg-[#0a0a0a] border border-[#333] rounded-lg p-3.5 text-white focus:border-red-500 transition-all outline-none" placeholder="••••••••" />
                 </div>
                 
                 <div id="login-error" class="text-red-400 text-sm font-medium text-center hidden bg-red-950/30 border border-red-900/50 rounded-lg p-3 animate-fade-in"></div>
@@ -128,18 +127,11 @@
 
                 <div class="grid grid-cols-1 gap-3">
                     <button id="btn-google" type="button" onclick="window.appActions.loginWithGoogle()" class="w-full bg-white text-black font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-3 hover:bg-gray-200 transition-all h-12 hover:-translate-y-0.5">
-                        <svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
-                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
-                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
-                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
-                        </svg>
+                        <svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24"><path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" /><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" /><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" /><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" /></svg>
                         <span>Google</span>
                     </button>
-
                     <button id="btn-guest" type="button" onclick="window.appActions.loginAnonymously()" class="w-full bg-[#1a1a1a] border border-[#333] text-gray-300 font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-2 hover:bg-[#2a2a2a] hover:text-white transition-all h-12 hover:-translate-y-0.5">
-                        <i data-lucide="user" class="w-5 h-5"></i>
-                        <span>Visitante (Testar App)</span>
+                        <i data-lucide="user" class="w-5 h-5"></i><span>Visitante (Testar App)</span>
                     </button>
                 </div>
             </form>
@@ -168,7 +160,7 @@
                     <img id="sidebar-avatar-img" class="w-11 h-11 rounded-full border-2 border-red-500/50 group-hover:border-red-500 object-cover hidden transition-colors" src="" alt="Avatar" />
                     <div id="sidebar-avatar-initial" class="w-11 h-11 rounded-full bg-red-900/30 border-2 border-red-500/50 group-hover:border-red-500 flex items-center justify-center font-bold text-red-400 transition-colors">U</div>
                     <div class="overflow-hidden flex-1">
-                        <p id="sidebar-user-name" class="text-sm font-bold text-white truncate">Carregando...</p>
+                        <p id="sidebar-user-name" class="text-sm font-bold text-white truncate">A carregar...</p>
                         <p class="text-[11px] text-red-500 font-medium uppercase tracking-wider mt-0.5">Meu Perfil <i data-lucide="chevron-right" class="inline w-3 h-3"></i></p>
                     </div>
                 </div>
@@ -187,9 +179,7 @@
         <main class="flex-1 h-screen overflow-y-auto relative flex flex-col bg-[#0a0a0a]">
             <header class="bg-[#141414]/80 backdrop-blur-lg border-b border-[#222] p-4 md:px-8 flex justify-between items-center sticky top-0 z-30">
                 <div class="flex items-center gap-4">
-                    <button onclick="window.appActions.toggleMobileMenu()" class="md:hidden text-gray-400 hover:text-white transition-colors bg-[#222] p-2 rounded-lg">
-                        <i data-lucide="menu" class="w-5 h-5"></i>
-                    </button>
+                    <button onclick="window.appActions.toggleMobileMenu()" class="md:hidden text-gray-400 hover:text-white transition-colors bg-[#222] p-2 rounded-lg"><i data-lucide="menu" class="w-5 h-5"></i></button>
                     <h1 id="header-title" class="text-2xl font-bold text-white capitalize hidden sm:block tracking-tight">Dashboard</h1>
                 </div>
                 
@@ -227,7 +217,7 @@
         </main>
     </div>
 
-    <!-- MODAIS -->
+    <!-- MODAIS DO SISTEMA -->
     <div id="modal-backdrop" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all">
         
         <!-- Modal Cliente -->
@@ -286,11 +276,11 @@
                     <div class="bg-[#1a1a1a] border border-[#333] rounded-xl p-4 mt-4 relative overflow-hidden">
                         <div class="absolute top-0 left-0 w-1 h-full bg-red-500"></div>
                         <div class="flex justify-between items-center mb-3">
-                            <h4 class="text-xs font-bold text-red-400 uppercase tracking-wider">Responsabilidade & Repasse</h4>
+                            <h4 class="text-xs font-bold text-red-400 uppercase tracking-wider">Repasse à Equipa</h4>
                             <button type="button" onclick="window.appActions.addTeamAllocationRow()" class="text-[10px] bg-[#2a2a2a] hover:bg-[#444] text-white px-2.5 py-1.5 rounded shadow-sm font-bold uppercase transition-colors flex items-center gap-1"><i data-lucide="plus" class="w-3 h-3"></i> Membro</button>
                         </div>
                         <div id="team-allocations-container" class="space-y-3"></div>
-                        <p class="text-[10px] text-gray-500 mt-3 italic">Defina quem recebe a margem de lucro deste projeto e qual sua %.</p>
+                        <p class="text-[10px] text-gray-500 mt-3 italic">Defina a percentagem da margem que este membro recebe. Custos fixos e ferramentas são deduzidos automaticamente.</p>
                     </div>
                 </div>
 
@@ -338,7 +328,7 @@
             </div>
         </div>
         
-        <!-- Modal ÚNICO (Equipe & Custos/Fornecedores) -->
+        <!-- Modal Custo/Equipa (Unificado) -->
         <div id="modal-item" class="hidden bg-[#141414] border border-[#333] rounded-2xl w-full max-w-md shadow-2xl overflow-hidden flex-col animate-scale-in">
             <div class="p-6 border-b border-[#2a2a2a] flex justify-between items-center bg-[#111]">
                 <h2 id="item-modal-title" class="text-xl font-bold text-white tracking-tight">Novo Cadastro</h2>
@@ -349,11 +339,11 @@
                 <input type="hidden" id="item-original-type" />
                 
                 <div>
-                    <label class="block text-xs font-bold text-gray-400 mb-1.5 uppercase">Tipo de Cadastro <span class="text-red-500">*</span></label>
+                    <label class="block text-xs font-bold text-gray-400 mb-1.5 uppercase">Categoria do Custo <span class="text-red-500">*</span></label>
                     <div class="relative">
                         <select id="item-type" onchange="window.appActions.toggleItemType()" class="w-full bg-[#0a0a0a] border border-[#333] rounded-lg p-3 text-white focus:border-red-500 outline-none appearance-none font-bold">
                             <option value="ferramenta">Ferramenta / Fornecedor (Pré-Margem)</option>
-                            <option value="equipe">Time / Terceiro (Pós-Margem)</option>
+                            <option value="equipe">Membro da Equipe (Pós-Margem)</option>
                             <option value="manutencao">Manutenções Extras (Pós-Margem)</option>
                         </select>
                         <i data-lucide="chevron-down" class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none"></i>
@@ -361,12 +351,12 @@
                 </div>
 
                 <div>
-                    <label id="lbl-item-name" class="block text-xs font-bold text-gray-400 mb-1.5 uppercase">Descrição / Nome do Fornecedor</label>
+                    <label id="lbl-item-name" class="block text-xs font-bold text-gray-400 mb-1.5 uppercase">Descrição</label>
                     <input type="text" id="item-name" class="w-full bg-[#0a0a0a] border border-[#333] rounded-lg p-3 text-white focus:border-red-500 outline-none" />
                 </div>
                 
                 <div id="container-item-role" class="hidden">
-                    <label class="block text-xs font-bold text-gray-400 mb-1.5 uppercase">Cargo / Função (Equipe)</label>
+                    <label class="block text-xs font-bold text-gray-400 mb-1.5 uppercase">Cargo / Função</label>
                     <input type="text" id="item-role" class="w-full bg-[#0a0a0a] border border-[#333] rounded-lg p-3 text-white focus:border-red-500 outline-none" />
                 </div>
 
@@ -380,13 +370,13 @@
                 </div>
                 
                 <div>
-                    <label class="block text-xs font-bold text-gray-400 mb-1.5 uppercase">Mês Específico (Vazio = Fixo/Recorrente)</label>
+                    <label class="block text-xs font-bold text-gray-400 mb-1.5 uppercase">Mês Específico (Opcional)</label>
                     <input type="month" id="item-month" class="w-full bg-[#0a0a0a] border border-[#333] rounded-lg p-3 text-white focus:border-red-500 outline-none" />
-                    <p class="text-[10px] text-gray-500 mt-1">Preencha apenas se for um custo que ocorre uma única vez em um mês.</p>
+                    <p class="text-[10px] text-gray-500 mt-1">Preencha apenas se for um custo pontual em um mês. Se vazio, é recorrente.</p>
                 </div>
 
                 <div>
-                    <label id="lbl-item-cost" class="block text-xs font-bold text-red-500 mb-1.5 uppercase">Custo (R$)</label>
+                    <label id="lbl-item-cost" class="block text-xs font-bold text-red-500 mb-1.5 uppercase">Custo Mensal (R$)</label>
                     <div class="relative w-full">
                         <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm font-bold pointer-events-none">R$</span>
                         <input type="text" id="item-cost" class="currency-mask w-full bg-[#0a0a0a] border border-red-900/50 rounded-lg p-3 pl-9 text-white font-bold focus:border-red-500 outline-none" />
@@ -433,12 +423,6 @@
                         <input type="text" id="history-cost" class="currency-mask w-full bg-[#0a0a0a] border border-red-900/50 rounded-lg p-2.5 pl-9 text-white focus:border-red-500 outline-none" />
                     </div>
                 </div>
-
-                <div class="pt-4 border-t border-[#2a2a2a]">
-                    <h3 class="text-[10px] font-bold text-gray-400 mb-3 uppercase tracking-wider">Faturamento por Integrante (Apenas Margem Limpa)</h3>
-                    <div id="history-members-container" class="space-y-2 max-h-32 overflow-y-auto pr-2 scrollbar-hide">
-                    </div>
-                </div>
             </div>
             <div class="p-6 border-t border-[#2a2a2a] bg-[#111] flex justify-end gap-3">
                 <button onclick="window.appActions.closeModal()" class="px-5 py-2.5 rounded-lg font-bold text-gray-400 hover:text-white transition-colors hover:bg-[#222]">Cancelar</button>
@@ -481,12 +465,8 @@
         if (typeof __firebase_config !== 'undefined') {
             try { 
                 const parsed = JSON.parse(__firebase_config); 
-                if (parsed && parsed.apiKey) {
-                    firebaseConfig = parsed; 
-                }
-            } catch(e) {
-                console.error("Config fallback used");
-            }
+                if (parsed && parsed.apiKey) { firebaseConfig = parsed; }
+            } catch(e) {}
         }
 
         const app = initializeApp(firebaseConfig);
@@ -506,16 +486,14 @@
             clients: [], transactions: [], team: [], closures: [], expenses: [],
             selectedMonth: getInitialMonth(),
             selectedYear: new Date().getFullYear().toString(),
-            clientFilter: 'Todos', 
+            clientFilter: 'Ativos', 
             isSignUpMode: false, 
             chartInstance: null,
-            lineChartInstance: null,
             memberChartInstance: null,
             selectedMemberId: null
         };
 
         const escapeHTML = window.escapeHTML;
-        const escapeJS = window.escapeJS;
 
         function formatCurrency(val) {
             return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(val) || 0);
@@ -525,7 +503,7 @@
             return (Number(val) || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
         
-        // MATEMÁTICA CENTRAL DO SISTEMA
+        // MATEMÁTICA CENTRAL DO DFC (Cascata Pedida)
         function calcFinancials(fatBruto, custoFerramenta, custoTimeManut) {
             fatBruto = Number(fatBruto) || 0;
             custoFerramenta = Number(custoFerramenta) || 0;
@@ -577,9 +555,7 @@
         function setupCurrencyMasks() {
             document.querySelectorAll('.currency-mask').forEach(function(input) {
                 const newInp = input.cloneNode(true);
-                if(input.parentNode) {
-                    input.parentNode.replaceChild(newInp, input);
-                }
+                if(input.parentNode) { input.parentNode.replaceChild(newInp, input); }
                 newInp.addEventListener('input', function(e) {
                     let val = e.target.value.replace(/\D/g, '');
                     if (val === '') { 
@@ -589,17 +565,6 @@
                         let num = Number(val) / 100; 
                         e.target.dataset.value = num; 
                         e.target.value = formatNumberToBR(num); 
-                    }
-                    
-                    if(newInp.id === 'client-recurringValue' || newInp.id === 'client-supplierCost') {
-                        const rec = getCurrencyInput('client-recurringValue');
-                        const cost = getCurrencyInput('client-supplierCost');
-                        const target = document.getElementById('client-recurringMargin');
-                        if (target) target.innerText = formatCurrency(calcFinancials(rec, cost, 0).margem);
-                    }
-                    if(newInp.id === 'client-oneTimeValue') {
-                        const target = document.getElementById('client-oneTimeMargin');
-                        if (target) target.innerText = formatCurrency(calcFinancials(Number(newInp.dataset.value), 0, 0).margem);
                     }
                 });
             });
@@ -615,17 +580,791 @@
 
         function getCurrencyInput(id) {
             const el = document.getElementById(id);
-            if(el) {
-                return Number(el.dataset.value || 0);
-            }
+            if(el) { return Number(el.dataset.value || 0); }
             return 0;
         }
+
+        // ==========================================
+        // FUNÇÕES DE AÇÃO GLOBAIS BLINDADAS
+        // ==========================================
+
+        window.appActions.changeTab = function(tab) { 
+            state.activeTab = tab; 
+            if(window.innerWidth < 768) {
+                const sidebar = document.getElementById('sidebar');
+                const overlay = document.getElementById('sidebar-overlay');
+                if (sidebar) sidebar.classList.add('-translate-x-full');
+                if (overlay) overlay.classList.add('hidden');
+            }
+            renderNav();
+            renderContent();
+        };
+
+        window.appActions.toggleMobileMenu = function() { 
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            if (sidebar) sidebar.classList.toggle('-translate-x-full'); 
+            if (overlay) overlay.classList.toggle('hidden'); 
+        };
+
+        window.appActions.setFilterMode = function(mode) {
+            state.filterMode = mode;
+            const btnM = document.getElementById('filter-btn-month');
+            const btnY = document.getElementById('filter-btn-year');
+            const btnA = document.getElementById('filter-btn-all');
+            const btnF = document.getElementById('filter-btn-forecast');
+            
+            const activeClass = 'px-4 py-1.5 text-xs font-bold rounded-md bg-[#333] text-white shadow-sm transition-all';
+            const inactiveClass = 'px-4 py-1.5 text-xs font-bold rounded-md text-gray-500 hover:text-white transition-all';
+            
+            if(btnM) btnM.className = mode === 'month' ? activeClass : inactiveClass;
+            if(btnY) btnY.className = mode === 'year' ? activeClass : inactiveClass;
+            if(btnA) btnA.className = mode === 'all' ? activeClass : inactiveClass;
+            if(btnF) btnF.className = mode === 'forecast' ? activeClass : inactiveClass;
+
+            const mC = document.getElementById('filter-month-container');
+            const yC = document.getElementById('filter-year-container');
+
+            if (mode === 'month') {
+                if(mC) mC.classList.remove('hidden');
+                if(yC) yC.classList.add('hidden');
+            } else if (mode === 'year') {
+                if(mC) mC.classList.add('hidden');
+                if(yC) yC.classList.remove('hidden');
+            } else {
+                if(mC) mC.classList.add('hidden');
+                if(yC) yC.classList.add('hidden');
+            }
+            renderContent();
+        };
+
+        window.appActions.setMemberChart = function(id) {
+            state.selectedMemberId = id;
+            renderChart();
+        };
+
+        window.appActions.toggleAuthMode = function() { 
+            state.isSignUpMode = !state.isSignUpMode; 
+            const nameField = document.getElementById('name-field');
+            const btnAction = document.getElementById('btn-action');
+            const toggleAuthText = document.getElementById('toggle-auth-text');
+            const toggleBtn = document.querySelector('#toggle-auth-text + button');
+            const errorEl = document.getElementById('login-error');
+            
+            if(nameField) nameField.classList.toggle('hidden', !state.isSignUpMode); 
+            if(btnAction) btnAction.innerText = state.isSignUpMode ? 'Criar Conta e Entrar' : 'Entrar no Sistema'; 
+            if(toggleAuthText) toggleAuthText.innerText = state.isSignUpMode ? 'Já tem uma conta?' : 'Não tem uma conta?'; 
+            if(toggleBtn) toggleBtn.innerText = state.isSignUpMode ? 'Fazer login' : 'Criar conta grátis'; 
+            if(errorEl) errorEl.classList.add('hidden'); 
+        };
+
+        window.appActions.setLoading = function(isLoading, btnId) {
+            const btn = document.getElementById(btnId);
+            if (!btn) return;
+            if (isLoading) {
+                btn.disabled = true;
+                if(!btn.dataset.originalHtml) btn.dataset.originalHtml = btn.innerHTML;
+                btn.innerHTML = `<svg class="animate-spin h-5 w-5 text-current mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>`;
+            } else {
+                btn.disabled = false;
+                if (btn.dataset.originalHtml) {
+                    btn.innerHTML = btn.dataset.originalHtml;
+                    delete btn.dataset.originalHtml;
+                }
+            }
+        };
+
+        window.appActions.handleEmailAuth = async function() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const name = document.getElementById('login-name').value;
+            const errorEl = document.getElementById('login-error');
+            
+            try {
+                if (errorEl) errorEl.classList.add('hidden');
+                if (!email || !password) throw new Error("Preencha e-mail e senha.");
+                window.appActions.setLoading(true, 'btn-action');
+                if (state.isSignUpMode) {
+                    if (!name) throw new Error("Por favor, preencha seu nome para criar a conta.");
+                    const cred = await createUserWithEmailAndPassword(auth, email, password);
+                    await updateProfile(cred.user, { displayName: name });
+                } else { 
+                    await signInWithEmailAndPassword(auth, email, password); 
+                }
+            } catch(e) { 
+                let msg = "Erro: " + e.message;
+                if(e.code === 'auth/invalid-email') msg = "E-mail inválido.";
+                if(e.code === 'auth/user-not-found' || e.code === 'auth/invalid-credential') msg = "E-mail ou senha incorretos.";
+                if(e.code === 'auth/email-already-in-use') msg = "Este e-mail já possui conta.";
+                if(e.code === 'auth/weak-password') msg = "Senha deve ter no mínimo 6 caracteres.";
+                if(errorEl) { errorEl.innerText = msg; errorEl.classList.remove('hidden'); }
+            } finally { 
+                window.appActions.setLoading(false, 'btn-action'); 
+            }
+        };
+
+        window.appActions.loginWithGoogle = async function() {
+            const errorEl = document.getElementById('login-error');
+            if(errorEl) errorEl.classList.add('hidden');
+            window.appActions.setLoading(true, 'btn-google');
+            try { 
+                const provider = new GoogleAuthProvider(); 
+                provider.setCustomParameters({ prompt: 'select_account' });
+                await signInWithPopup(auth, provider); 
+            } catch(e) { 
+                let msg = "Erro ao conectar com Google.";
+                if (e.code === 'auth/unauthorized-domain') {
+                    msg = `<strong>Proteção de Segurança:</strong><br/>Copie o domínio atual e cole no Firebase em <em>Configurações > Domínios Autorizados</em>.<p class="mt-3 text-xs text-gray-400 font-normal">Para testar, use o botão <strong>Visitante</strong>.</p>`;
+                } else if (e.code === 'auth/popup-closed-by-user') { 
+                    msg = "Janela de login fechada."; 
+                }
+                if(errorEl) { errorEl.innerHTML = msg; errorEl.classList.remove('hidden'); }
+            } finally { 
+                window.appActions.setLoading(false, 'btn-google'); 
+            }
+        };
+
+        window.appActions.loginAnonymously = async function() { 
+            window.appActions.setLoading(true, 'btn-guest'); 
+            try { 
+                await signInAnonymously(auth); 
+            } catch(e) { 
+                window.showToast(e.message, 'error'); 
+                window.appActions.setLoading(false, 'btn-guest');
+            } 
+        };
+
+        window.appActions.logout = function() {
+            signOut(auth);
+        };
+
+        window.appActions.saveProfile = async function() {
+            if(!state.user) return;
+            const newName = document.getElementById('profile-name').value;
+            const newPass = document.getElementById('profile-password').value;
+            window.appActions.setLoading(true, 'btn-save-profile');
+            
+            try {
+                if (newName && newName !== state.user.displayName) { 
+                    await updateProfile(auth.currentUser, { displayName: newName }); 
+                    state.user = auth.currentUser; 
+                }
+                if (newPass) { 
+                    await updatePassword(auth.currentUser, newPass); 
+                    document.getElementById('profile-password').value = ''; 
+                }
+                window.showToast('Perfil atualizado com sucesso!');
+                updateHeaderGreeting();
+            } catch(e) {
+                window.showToast((e.code === 'auth/requires-recent-login' ? 'Para mudar a senha, refaça o login por segurança.' : e.message), 'error');
+            } finally { 
+                window.appActions.setLoading(false, 'btn-save-profile'); 
+            }
+        };
+
+        window.appActions.updateProfilePhoto = async function(input) {
+            if(!state.user || !input.files || input.files.length === 0) return;
+            const file = input.files[0];
+            if(file.size > 1024 * 1024) { window.showToast("Use imagens menores que 1MB.", "error"); return; }
+            const reader = new FileReader();
+            reader.onloadend = async function() {
+                try { 
+                    await updateProfile(auth.currentUser, { photoURL: reader.result }); 
+                    state.user = auth.currentUser; 
+                    renderContent(); 
+                    updateHeaderGreeting(); 
+                    window.showToast('Foto atualizada!');
+                } catch(e) { 
+                    window.showToast("Erro ao salvar foto.", "error"); 
+                }
+            }; 
+            reader.readAsDataURL(file);
+        };
+
+        window.appActions.toggleItemType = function() {
+            const type = document.getElementById('item-type').value;
+            const containerRole = document.getElementById('container-item-role');
+            const containerClient = document.getElementById('container-item-client');
+            const lblName = document.getElementById('lbl-item-name');
+            const lblCost = document.getElementById('lbl-item-cost');
+
+            if (type === 'fornecedor') {
+                containerRole.classList.add('hidden');
+                containerClient.classList.remove('hidden');
+                lblName.innerText = 'Descrição / Nome da Ferramenta';
+                lblCost.innerText = 'Custo Mensal (R$)';
+            } else if (type === 'equipe') {
+                containerRole.classList.remove('hidden');
+                containerClient.classList.add('hidden');
+                lblName.innerText = 'Nome do Integrante / Terceiro';
+                lblCost.innerText = 'Custo Fixo Mensal (R$)';
+            } else {
+                containerRole.classList.add('hidden');
+                containerClient.classList.add('hidden');
+                lblName.innerText = 'Descrição da Manutenção';
+                lblCost.innerText = 'Custo da Manutenção (R$)';
+            }
+        };
+
+        window.appActions.openItemModal = function(id, type) {
+            const m = document.getElementById('modal-item');
+            const typeSel = document.getElementById('item-type');
+            const selClient = document.getElementById('item-clientId');
+            
+            if (selClient) {
+                selClient.innerHTML = '<option value="">Custo Geral Operacional (Não associado)</option>' + 
+                    state.clients.map(function(c) { return `<option value="${escapeHTML(c.id)}">${escapeHTML(c.name)}</option>`; }).join('');
+            }
+
+            if(id && id !== 'undefined' && id !== 'null') {
+                document.getElementById('item-modal-title').innerText = 'Editar Cadastro';
+                document.getElementById('item-id').value = id;
+                document.getElementById('item-original-type').value = type;
+                
+                typeSel.value = type;
+                typeSel.disabled = true;
+
+                if (type === 'fornecedor') {
+                    const e = state.expenses.find(function(x) { return x.id === id; });
+                    if(e) {
+                        document.getElementById('item-name').value = e.name || '';
+                        document.getElementById('item-month').value = e.month || '';
+                        if(selClient) selClient.value = e.clientId || '';
+                        setCurrencyInput('item-cost', e.amount);
+                    }
+                } else {
+                    const t = state.team.find(function(x) { return x.id === id; });
+                    if(t) {
+                        document.getElementById('item-name').value = t.name || '';
+                        document.getElementById('item-role').value = t.role || '';
+                        document.getElementById('item-month').value = t.month || '';
+                        setCurrencyInput('item-cost', t.cost);
+                    }
+                }
+            } else {
+                document.getElementById('item-modal-title').innerText = 'Novo Cadastro';
+                document.getElementById('item-id').value = '';
+                document.getElementById('item-original-type').value = '';
+                
+                typeSel.value = type || 'fornecedor';
+                typeSel.disabled = false;
+
+                document.getElementById('item-name').value = '';
+                document.getElementById('item-role').value = '';
+                document.getElementById('item-month').value = '';
+                if(selClient) selClient.value = '';
+                setCurrencyInput('item-cost', 0);
+            }
+            
+            window.appActions.toggleItemType();
+
+            const backdrop = document.getElementById('modal-backdrop');
+            if(backdrop) backdrop.classList.remove('hidden'); 
+            if(m) { m.classList.remove('hidden'); m.classList.add('flex'); }
+        };
+
+        window.appActions.saveItem = async function() {
+            if(!state.user) return;
+            const id = document.getElementById('item-id').value;
+            const type = document.getElementById('item-type').value;
+            const name = document.getElementById('item-name').value;
+            const month = document.getElementById('item-month').value;
+            const cost = getCurrencyInput('item-cost');
+
+            if(!name) return window.showToast('A descrição é obrigatória!', 'error');
+
+            window.appActions.setLoading(true, 'btn-save-item');
+
+            try {
+                if (type === 'fornecedor') {
+                    const data = {
+                        name: name,
+                        clientId: document.getElementById('item-clientId').value,
+                        amount: cost,
+                        month: month
+                    };
+                    if (id) await updateDoc(doc(db, 'artifacts', appId, 'users', state.user.uid, 'expenses', id), data);
+                    else await addDoc(collection(db, 'artifacts', appId, 'users', state.user.uid, 'expenses'), { ...data, createdAt: new Date().toISOString() });
+                } else {
+                    const data = {
+                        name: name,
+                        role: type === 'manutencao' ? 'Manutenção' : document.getElementById('item-role').value,
+                        cost: cost,
+                        itemType: type,
+                        month: month
+                    };
+                    if (id) await updateDoc(doc(db, 'artifacts', appId, 'users', state.user.uid, 'team', id), data);
+                    else await addDoc(collection(db, 'artifacts', appId, 'users', state.user.uid, 'team'), { ...data, createdAt: new Date().toISOString() });
+                }
+                window.showToast('Cadastro salvo com sucesso!');
+                window.appActions.closeModal();
+            } catch(e) { 
+                window.showToast('Erro ao salvar.', 'error'); 
+            } finally { 
+                window.appActions.setLoading(false, 'btn-save-item'); 
+            }
+        };
+
+        window.appActions.deleteItem = async function(id, type) {
+            if(!state.user) return; 
+            if(confirm('Tem certeza que deseja excluir este cadastro e todo o seu impacto no DFC?')) { 
+                try { 
+                    const col = type === 'fornecedor' ? 'expenses' : 'team';
+                    await deleteDoc(doc(db, 'artifacts', appId, 'users', state.user.uid, col, id)); 
+                    window.showToast('Removido com sucesso.');
+                } catch(e) { window.showToast('Erro ao remover.', 'error'); } 
+            } 
+        };
+
+        window.appActions.addTeamAllocationRow = function(memberId, pct) {
+            memberId = memberId || '';
+            pct = pct || 100;
+            const container = document.getElementById('team-allocations-container');
+            if(!container) return;
+            const row = document.createElement('div');
+            row.className = 'flex gap-3 items-end team-allocation-row mb-2';
+            const validTeam = state.team.filter(function(t) { return t.itemType !== 'manutencao'; });
+            row.innerHTML = `
+                <div class="flex-1">
+                    <select class="w-full bg-[#0a0a0a] border border-[#333] rounded-lg p-2.5 text-sm text-white focus:border-red-500 outline-none alloc-member">
+                        <option value="">Selecione Integrante...</option>
+                        ${validTeam.map(function(m) { return `<option value="${escapeHTML(m.id)}" ${m.id === memberId ? 'selected' : ''}>${escapeHTML(m.name)}</option>`; }).join('')}
+                    </select>
+                </div>
+                <div class="w-24 relative">
+                    <input type="number" min="0" max="100" value="${pct}" class="w-full bg-[#0a0a0a] border border-[#333] rounded-lg p-2.5 text-sm text-white focus:border-red-500 outline-none pr-6 alloc-pct" />
+                    <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-xs font-bold">%</span>
+                </div>
+                <button type="button" onclick="this.parentElement.remove()" class="bg-[#222] hover:bg-red-900/50 text-gray-400 hover:text-red-400 p-2.5 rounded-lg transition-colors border border-transparent hover:border-red-900/50 flex-shrink-0"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+            `;
+            container.appendChild(row);
+            if(window.lucide) window.lucide.createIcons({root: row});
+        };
+
+        window.appActions.setClientFilter = function(filter) { 
+            state.clientFilter = filter; 
+            renderContent(); 
+        };
+
+        window.appActions.openClientModal = function(id) {
+            const m = document.getElementById('modal-client');
+            const allocContainer = document.getElementById('team-allocations-container');
+            if (allocContainer) allocContainer.innerHTML = '';
+
+            if(id && id !== 'undefined' && id !== 'null') {
+                const c = state.clients.find(function(x) { return x.id === id; });
+                if(!c) return;
+                document.getElementById('client-modal-title').innerText = 'Editar Projeto & Cliente';
+                document.getElementById('client-id').value = c.id;
+                document.getElementById('client-name').value = c.name || '';
+                document.getElementById('client-phase').value = c.phase || 'Tratativa';
+                document.getElementById('client-status').value = c.status || 'Ativo';
+                document.getElementById('client-supplier').value = c.supplier || '';
+                document.getElementById('client-system').value = c.system || '';
+                document.getElementById('client-serviceType').value = c.serviceType || '';
+                
+                setCurrencyInput('client-recurringValue', c.recurringValue);
+                setCurrencyInput('client-oneTimeValue', c.oneTimeValue);
+                
+                document.getElementById('client-deliveryDate').value = c.deliveryDate || '';
+                document.getElementById('client-nps').value = c.nps || '';
+                document.getElementById('client-observation').value = c.observation || '';
+
+                if (c.teamAllocations && c.teamAllocations.length > 0) {
+                    c.teamAllocations.forEach(function(alloc) { window.appActions.addTeamAllocationRow(alloc.memberId, alloc.percentage); });
+                } else if (c.assignedMemberId) {
+                    window.appActions.addTeamAllocationRow(c.assignedMemberId, c.memberPercentage || 100);
+                } else {
+                    window.appActions.addTeamAllocationRow('', 100);
+                }
+
+            } else {
+                document.getElementById('client-modal-title').innerText = 'Cadastrar Novo Projeto';
+                document.getElementById('client-id').value = '';
+                document.getElementById('client-name').value = '';
+                document.getElementById('client-phase').value = 'Tratativa';
+                document.getElementById('client-status').value = 'Ativo';
+                document.getElementById('client-supplier').value = '';
+                document.getElementById('client-system').value = '';
+                document.getElementById('client-serviceType').value = '';
+                
+                setCurrencyInput('client-recurringValue', 0);
+                setCurrencyInput('client-oneTimeValue', 0);
+                
+                document.getElementById('client-deliveryDate').value = '';
+                document.getElementById('client-nps').value = '';
+                document.getElementById('client-observation').value = '';
+                window.appActions.addTeamAllocationRow('', 100);
+            }
+            
+            const backdrop = document.getElementById('modal-backdrop');
+            if(backdrop) backdrop.classList.remove('hidden'); 
+            if(m) { m.classList.remove('hidden'); m.classList.add('flex'); }
+        };
+
+        window.appActions.closeModal = function() { 
+            const backdrop = document.getElementById('modal-backdrop');
+            if (backdrop) backdrop.classList.add('hidden'); 
+            ['modal-client', 'modal-history', 'modal-member-dashboard', 'modal-item'].forEach(function(id) {
+                const el = document.getElementById(id);
+                if(el) { el.classList.add('hidden'); el.classList.remove('flex'); }
+            }); 
+        };
+
+        window.appActions.saveClient = async function() {
+            if(!state.user) return;
+            const cid = document.getElementById('client-id').value;
+            
+            const teamAllocations = Array.from(document.querySelectorAll('.team-allocation-row')).map(function(row) {
+                return {
+                    memberId: row.querySelector('.alloc-member').value,
+                    percentage: Number(row.querySelector('.alloc-pct').value) || 0
+                };
+            }).filter(function(a) { return a.memberId !== ''; });
+
+            const data = {
+                name: document.getElementById('client-name').value, 
+                phase: document.getElementById('client-phase').value, 
+                status: document.getElementById('client-status').value,
+                supplier: document.getElementById('client-supplier').value, 
+                system: document.getElementById('client-system').value, 
+                serviceType: document.getElementById('client-serviceType').value,
+                teamAllocations: teamAllocations,
+                recurringValue: getCurrencyInput('client-recurringValue'), 
+                oneTimeValue: getCurrencyInput('client-oneTimeValue'),
+                deliveryDate: document.getElementById('client-deliveryDate').value, 
+                nps: document.getElementById('client-nps').value, 
+                observation: document.getElementById('client-observation').value
+            };
+
+            try {
+                if(!data.name) return window.showToast('Nome do projeto é obrigatório!', 'error');
+                window.appActions.setLoading(true, 'btn-save-client');
+                
+                if (cid) {
+                    await updateDoc(doc(db, 'artifacts', appId, 'users', state.user.uid, 'clients', cid), data);
+                } else {
+                    await addDoc(collection(db, 'artifacts', appId, 'users', state.user.uid, 'clients'), { ...data, createdAt: new Date().toISOString() });
+                }
+                window.showToast('Projeto salvo com sucesso!');
+                window.appActions.closeModal();
+            } catch(e) { 
+                window.showToast('Erro ao salvar projeto.', 'error'); 
+            } finally { 
+                window.appActions.setLoading(false, 'btn-save-client'); 
+            }
+        };
+
+        window.appActions.darBaixa = async function(clientId, value, type) {
+            if(!state.user) return;
+            const client = state.clients.find(function(c) { return c.id === clientId; });
+            if (!client) return;
+            
+            try { 
+                await addDoc(collection(db, 'artifacts', appId, 'users', state.user.uid, 'transactions'), { 
+                    clientId: clientId, clientName: client.name, month: state.selectedMonth, value: Number(value), type: type, createdAt: new Date().toISOString() 
+                });
+                window.showToast(`Baixa de ${formatCurrency(value)} registada.`);
+            } catch(e) { window.showToast('Erro ao registar baixa.', 'error'); }
+        };
+
+        window.appActions.removeBaixa = async function(tid) { 
+            if(!state.user) return; 
+            try { 
+                await deleteDoc(doc(db, 'artifacts', appId, 'users', state.user.uid, 'transactions', tid)); 
+                window.showToast('Baixa desfeita com sucesso.');
+            } catch(e) { window.showToast('Erro ao desfazer.', 'error'); } 
+        };
+
+        window.appActions.openMemberDashboard = function(id) {
+            const member = state.team.find(function(m) { return m.id === id; });
+            if(!member) return;
+
+            let mrrMcGerado = 0;
+            let mCostTotal = 0;
+            let subtitle = '';
+
+            const validExpenses = getValidExpenses(state.selectedMonth);
+
+            if (state.filterMode === 'forecast') {
+                subtitle = 'Projeção (Run Rate Atual)';
+                mCostTotal = Number(member.cost||0);
+                mrrMcGerado = state.clients.filter(function(c) { return c.status !== 'Churn'; }).reduce(function(sum, c) {
+                    const isOT = isClientOTActive(c, state.selectedMonth);
+                    const cFat = Number(c.recurringValue || 0) + (isOT ? Number(c.oneTimeValue || 0) : 0);
+                    let cSup = 0;
+                    validExpenses.forEach(function(e) { if(e.clientId === c.id) cSup += Number(e.amount || 0); });
+                    
+                    return sum + (calcFinancials(cFat, cSup, 0).margem * getMemberPct(c, member.id));
+                }, 0);
+            } else if (state.filterMode === 'month') {
+                subtitle = `Realizado em ${state.selectedMonth}`;
+                mCostTotal = Number(member.cost||0);
+                const moTrans = state.transactions.filter(function(t) { return t.month === state.selectedMonth; });
+                mrrMcGerado = moTrans.reduce(function(sum, t) {
+                    const c = state.clients.find(function(x) { return x.id === t.clientId; });
+                    let cSup = 0;
+                    validExpenses.forEach(function(e) { if(e.clientId === t.clientId) cSup += Number(e.amount || 0); });
+                    
+                    const tMargin = calcFinancials(Number(t.value || 0), cSup, 0).margem;
+                    return sum + (c ? tMargin * getMemberPct(c, member.id) : 0);
+                }, 0);
+            } else {
+                const contextYear = state.filterMode === 'year' ? state.selectedYear : 'Todo o Período Histórico';
+                subtitle = `Acumulado Histórico (${contextYear})`;
+                const closuresToUse = state.filterMode === 'year' ? state.closures.filter(function(c) { return c.month && c.month.startsWith(state.selectedYear); }) : state.closures;
+                
+                mrrMcGerado = closuresToUse.reduce(function(sum, closure) {
+                    if (closure.memberMargins && closure.memberMargins[member.id] !== undefined) {
+                        return sum + closure.memberMargins[member.id];
+                    }
+                    return sum;
+                }, 0);
+                mCostTotal = Number(member.cost||0) * closuresToUse.length;
+            }
+
+            const lucro = mrrMcGerado - mCostTotal;
+            const activeProjects = state.clients.filter(function(c) { return c.status !== 'Churn'; }).map(function(c) {
+                let pct = getMemberPct(c, member.id) * 100;
+                if(pct > 0) {
+                    let cSup = 0;
+                    validExpenses.forEach(function(e) { if(e.clientId === c.id) cSup += Number(e.amount || 0); });
+                    const margin = calcFinancials(Number(c.recurringValue||0), cSup, 0).margem;
+                    const memberCut = margin * (pct/100);
+                    return { ...c, pct: pct, memberCut: memberCut, totalMargin: margin };
+                }
+                return null;
+            }).filter(Boolean);
+
+            const dashTitle = document.getElementById('member-dash-title');
+            if(dashTitle) dashTitle.innerText = `Performance: ${escapeHTML(member.name.split(' ')[0])}`;
+
+            let html = `
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="w-16 h-16 bg-gradient-to-br from-red-800 to-red-600 rounded-xl flex items-center justify-center text-3xl font-black text-white shadow-lg shadow-red-900/40 border border-red-500/50">${escapeHTML(member.name).charAt(0).toUpperCase()}</div>
+                    <div>
+                        <h3 class="font-black text-2xl text-white tracking-tight">${escapeHTML(member.name)}</h3>
+                        <p class="text-xs text-gray-400 font-bold uppercase tracking-widest mt-1">${subtitle}</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+                    <div class="bg-[#111] border border-[#222] rounded-2xl p-6 shadow-lg relative overflow-hidden">
+                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Custo Base</h4>
+                        <div class="text-3xl font-black text-white">${formatCurrency(mCostTotal)}</div>
+                    </div>
+                    <div class="bg-emerald-950/20 border border-emerald-900/30 rounded-2xl p-6 shadow-lg relative overflow-hidden">
+                        <h4 class="text-[10px] font-bold text-emerald-500 uppercase tracking-widest mb-2">Sua Margem Gerada</h4>
+                        <div class="text-3xl font-black text-emerald-400">${formatCurrency(mrrMcGerado)}</div>
+                    </div>
+                    <div class="bg-[#111] border ${lucro >= 0 ? 'border-emerald-500/50 shadow-emerald-900/10' : 'border-red-500/50 shadow-red-900/10'} rounded-2xl p-6 shadow-lg relative overflow-hidden">
+                        <h4 class="text-[10px] font-bold ${lucro >= 0 ? 'text-emerald-500' : 'text-red-500'} uppercase tracking-widest mb-2">Lucratividade Líquida</h4>
+                        <div class="text-4xl font-black ${lucro >= 0 ? 'text-emerald-500' : 'text-red-500'}">${formatCurrency(lucro)}</div>
+                    </div>
+                </div>
+
+                <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4 border-b border-[#333] pb-2">Seus Projetos Ativos no Momento (${activeProjects.length})</h3>
+                <div class="overflow-x-auto bg-[#111] rounded-xl border border-[#222]">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-[#0a0a0a] border-b border-[#333] text-[10px] font-black uppercase tracking-widest text-gray-500">
+                                <th class="p-4">Projeto</th>
+                                <th class="p-4 text-center">% Atribuída</th>
+                                <th class="p-4 text-right">Margem DFC Projeto</th>
+                                <th class="p-4 text-right text-emerald-400">Repasse Ideal (Mês)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-[#222]">
+                            ${activeProjects.length > 0 ? activeProjects.map(function(p) { return `
+                                <tr class="hover:bg-[#1a1a1a] transition-colors">
+                                    <td class="p-4 font-bold text-white text-sm">${escapeHTML(p.name)} <span class="text-[9px] uppercase tracking-wider font-bold bg-[#222] border border-[#333] px-2 py-0.5 rounded ml-2 text-gray-400 align-middle">${escapeHTML(p.phase)}</span></td>
+                                    <td class="p-4 text-center font-bold text-red-400">${p.pct}%</td>
+                                    <td class="p-4 text-right text-gray-400 font-medium">${formatCurrency(p.totalMargin)}</td>
+                                    <td class="p-4 text-right font-black text-emerald-400">${formatCurrency(p.memberCut)}</td>
+                                </tr>
+                            `; }).join('') : `<tr><td colspan="4" class="p-8 text-center text-gray-500 italic font-medium">Nenhum projeto associado no momento.</td></tr>`}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+
+            const content = document.getElementById('member-dash-content');
+            if(content) content.innerHTML = html;
+            
+            const backdrop = document.getElementById('modal-backdrop');
+            if(backdrop) backdrop.classList.remove('hidden');
+            
+            const m = document.getElementById('modal-member-dashboard');
+            if(m) { m.classList.remove('hidden'); m.classList.add('flex'); }
+            if(window.lucide) window.lucide.createIcons();
+        };
+
+        window.appActions.lockMonth = async function() {
+            if(!state.user) return;
+            
+            window.appActions.setLoading(true, 'btn-lock-month');
+
+            const moTrans = state.transactions.filter(function(t) { return t.month === state.selectedMonth; });
+            const validExpenses = getValidExpenses(state.selectedMonth);
+            const validTeam = getValidTeam(state.selectedMonth);
+
+            let tRealRec=0, tMargin=0;
+            
+            const activeClients = state.clients.filter(function(c) { return c.status !== 'Churn' || (c.status === 'Churn' && moTrans.some(function(t) { return t.clientId === c.id; })); });
+            
+            const memberMargins = {};
+            
+            activeClients.forEach(function(c) {
+                const cTrans = moTrans.filter(function(t) { return t.clientId === c.id; });
+                const recT = cTrans.find(function(t) { return t.type === 'recorrente'; }); 
+                const otT = cTrans.find(function(t) { return t.type === 'onetime'; });
+                const valRec = recT ? Number(recT.value||0) : 0;
+                const valOt = otT ? Number(otT.value||0) : 0;
+                tRealRec += valRec + valOt;
+                
+                let cSup = 0;
+                validExpenses.forEach(function(e) { if(e.clientId === c.id) cSup += Number(e.amount || 0); });
+                
+                const clientMargin = calcFinancials(valRec + valOt, cSup, 0).margem;
+                tMargin += clientMargin;
+                
+                validTeam.forEach(function(m) {
+                    if (m.itemType === 'manutencao') return;
+                    const pct = getMemberPct(c, m.id);
+                    if(pct > 0) {
+                        if(!memberMargins[m.id]) memberMargins[m.id] = 0;
+                        memberMargins[m.id] += clientMargin * pct;
+                    }
+                });
+            });
+
+            let generalExpenses = 0;
+            validExpenses.forEach(function(e) { if(!e.clientId) generalExpenses += Number(e.amount || 0); });
+            tMargin -= (generalExpenses * 0.35);
+
+            const cFixo = validTeam.reduce(function(a, c) { return a + Number(c.cost||0); }, 0);
+
+            const data = { 
+                month: state.selectedMonth, 
+                mrrBrutoRealizado: tRealRec, 
+                margemTotalRealizada: tMargin, 
+                custosTotais: cFixo + generalExpenses, 
+                lucroLiquido: tMargin - cFixo, 
+                memberMargins: memberMargins, 
+                locked: true 
+            };
+
+            try {
+                await setDoc(doc(db, 'artifacts', appId, 'users', state.user.uid, 'monthly_closures', data.month), { ...data, updatedAt: new Date().toISOString() }, { merge: true });
+                window.showToast('Mês travado no histórico com sucesso!');
+            } catch(e) { 
+                window.showToast('Erro ao travar mês.', 'error'); 
+            } finally { 
+                window.appActions.setLoading(false, 'btn-lock-month'); 
+            }
+        };
+            
+        window.appActions.openHistoryModal = function(month) {
+            const m = document.getElementById('modal-history'); 
+            const minp = document.getElementById('history-month');
+            let closureData = null;
+            
+            if(month && month !== 'undefined' && month !== 'null') {
+                closureData = state.closures.find(function(x) { return x.month === month; });
+                if(!closureData) return;
+                document.getElementById('history-modal-title').innerText = 'Corrigir DFC Histórico'; 
+                minp.value = closureData.month; 
+                minp.disabled = true;
+                setCurrencyInput('history-mrr', closureData.mrrBrutoRealizado); 
+                setCurrencyInput('history-margin', closureData.margemTotalRealizada); 
+                setCurrencyInput('history-cost', closureData.custosTotais);
+            } else {
+                document.getElementById('history-modal-title').innerText = 'Lançar Mês Anterior'; 
+                minp.value = ''; 
+                minp.disabled = false;
+                setCurrencyInput('history-mrr', 0); 
+                setCurrencyInput('history-margin', 0); 
+                setCurrencyInput('history-cost', 0);
+            }
+            
+            const memContainer = document.getElementById('history-members-container');
+            if(memContainer) {
+                memContainer.innerHTML = state.team.map(function(mbr) {
+                    if (mbr.itemType === 'manutencao') return '';
+                    const val = (closureData && closureData.memberMargins && closureData.memberMargins[mbr.id]) ? closureData.memberMargins[mbr.id] : 0;
+                    return `
+                        <div class="flex justify-between items-center bg-[#0a0a0a] p-2.5 rounded-lg border border-[#333]">
+                            <span class="text-xs text-gray-300 font-bold truncate pr-2">${escapeHTML(mbr.name)}</span>
+                            <div class="relative w-28 flex-shrink-0">
+                                <span class="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 text-[10px] font-bold pointer-events-none">R$</span>
+                                <input type="text" data-member-id="${escapeHTML(mbr.id)}" class="currency-mask hist-mem-val w-full bg-[#111] border border-[#444] rounded p-1.5 pl-6 text-white text-xs font-bold focus:border-emerald-500 outline-none" value="${formatNumberToBR(val)}" data-value="${val}" />
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+            
+            setupCurrencyMasks();
+
+            const backdrop = document.getElementById('modal-backdrop');
+            if(backdrop) backdrop.classList.remove('hidden'); 
+            if(m) { m.classList.remove('hidden'); m.classList.add('flex'); }
+        };
+            
+        window.appActions.saveHistory = async function() {
+            if(!state.user) return;
+            window.appActions.setLoading(true, 'btn-save-history');
+
+            const memberMargins = {};
+            document.querySelectorAll('.hist-mem-val').forEach(function(input) {
+                const mId = input.getAttribute('data-member-id');
+                const val = Number(input.getAttribute('data-value') || 0);
+                if (val > 0) memberMargins[mId] = val;
+            });
+
+            const data = { 
+                month: document.getElementById('history-month').value, 
+                mrrBrutoRealizado: getCurrencyInput('history-mrr'), 
+                margemTotalRealizada: getCurrencyInput('history-margin'), 
+                custosTotais: getCurrencyInput('history-cost'),
+                memberMargins: memberMargins
+            };
+            
+            if(!data.month) { 
+                window.appActions.setLoading(false, 'btn-save-history'); 
+                return window.showToast('Selecione o mês!', 'error'); 
+            }
+            
+            data.lucroLiquido = data.margemTotalRealizada - data.custosTotais; 
+            data.locked = true;
+            
+            try {
+                await setDoc(doc(db, 'artifacts', appId, 'users', state.user.uid, 'monthly_closures', data.month), { ...data, updatedAt: new Date().toISOString() }, { merge: true });
+                window.showToast('Histórico atualizado com sucesso!');
+                window.appActions.closeModal();
+            } catch(e) { 
+                window.showToast('Erro ao salvar no histórico.', 'error'); 
+            } finally { 
+                window.appActions.setLoading(false, 'btn-save-history'); 
+            }
+        };
+
+        window.appActions.updateSelectedMonth = function(val) {
+            state.selectedMonth = val;
+            updateYearOptions();
+            renderContent();
+        };
+
+        window.appActions.updateSelectedYear = function(val) {
+            state.selectedYear = val;
+            renderContent();
+        };
 
         function renderNav() {
             const tabs = [
                 { id: 'dashboard', icon: 'layout-dashboard', label: 'Painel DFC' },
                 { id: 'clients', icon: 'users', label: 'Clientes & Projetos' },
-                { id: 'team', icon: 'briefcase', label: 'Equipe & Fornecedores' },
+                { id: 'team', icon: 'briefcase', label: 'Equipe & Custos Fixos' },
                 { id: 'closure', icon: 'calculator', label: 'Fechamento do Mês' },
                 { id: 'history', icon: 'history', label: 'Histórico de Faturamento' }
             ];
@@ -647,23 +1386,6 @@
             }
         }
 
-        function updateYearOptions() {
-            const select = document.getElementById('selected-year');
-            if(!select) return;
-            const currentYear = new Date().getFullYear().toString();
-            const years = new Set([currentYear]);
-            if (state.selectedMonth) {
-                years.add(state.selectedMonth.split('-')[0]);
-            }
-            state.closures.forEach(function(c) {
-                if(c.month) years.add(c.month.split('-')[0]);
-            });
-            
-            const sortedYears = Array.from(years).sort(function(a, b) { return b.localeCompare(a); });
-            select.innerHTML = sortedYears.map(function(y) { return `<option value="${y}">Resumo do Ano (${y})</option>`; }).join('');
-            select.value = state.selectedYear;
-        }
-
         function renderChart() {
             const ctx = document.getElementById('yearlyChart');
             const mCtx = document.getElementById('memberChart');
@@ -675,54 +1397,38 @@
                 
                 if (state.filterMode === 'forecast') {
                     mainLabels = ['Projeção Atual'];
-                    let tMargin = 0;
-                    state.clients.forEach(function(c) {
-                        if(c.status === 'Churn') return;
-                        const isOT = isClientOTActive(c, state.selectedMonth);
-                        const cFat = Number(c.recurringValue || 0) + (isOT ? Number(c.oneTimeValue || 0) : 0);
-                        let cSup = 0;
-                        state.expenses.forEach(function(e) { if(e.clientId === c.id) cSup += Number(e.amount || 0); });
-                        tMargin += calcFinancials(cFat, cSup, 0).margem;
-                    });
-
-                    let generalExpenses = 0;
-                    state.expenses.forEach(function(e) { if(!e.clientId) generalExpenses += Number(e.amount || 0); });
-                    tMargin -= (generalExpenses * 0.35);
-
-                    mainFaturamento = [tMargin];
+                    const activeC = state.clients.filter(function(c) { return c.status !== 'Churn'; });
+                    let tFatBruto = activeC.reduce(function(a, c) { return a + Number(c.recurringValue||0); }, 0) + 
+                                    activeC.reduce(function(a, c) { return a + (isClientOTActive(c, state.selectedMonth) ? Number(c.oneTimeValue||0) : 0); }, 0);
+                    
+                    mainFaturamento = [tFatBruto];
+                    
+                    let cVarFornecedores = 0;
+                    state.expenses.forEach(function(e) { cVarFornecedores += Number(e.amount || 0); });
                     const cFixo = state.team.reduce(function(a, c) { return a + Number(c.cost || 0); }, 0);
-                    mainCustos = [cFixo];
+                    
+                    mainCustos = [cFixo + cVarFornecedores];
                 } else if (state.filterMode === 'month') {
                     mainLabels = [state.selectedMonth];
                     const closedMonth = state.closures.find(function(c) { return c.month === state.selectedMonth; });
                     if (closedMonth) {
-                        mainFaturamento = [Number(closedMonth.margemTotalRealizada || 0)];
+                        mainFaturamento = [Number(closedMonth.mrrBrutoRealizado || 0)];
                         mainCustos = [Number(closedMonth.custosTotais || 0)];
                     } else {
                         const moTrans = state.transactions.filter(function(t) { return t.month === state.selectedMonth; });
-                        let tMargin = 0;
-                        state.clients.forEach(function(c) {
-                            if(c.status === 'Churn' && !moTrans.some(t => t.clientId === c.id)) return;
-                            const cTrans = moTrans.filter(function(t) { return t.clientId === c.id; });
-                            const cFat = cTrans.reduce(function(a, t) { return a + Number(t.value || 0); }, 0);
-                            let cSup = 0;
-                            state.expenses.forEach(function(e) { if(e.clientId === c.id) cSup += Number(e.amount || 0); });
-                            tMargin += calcFinancials(cFat, cSup, 0).margem;
-                        });
-
-                        let generalExpenses = 0;
-                        state.expenses.forEach(function(e) { if(!e.clientId) generalExpenses += Number(e.amount || 0); });
-                        tMargin -= (generalExpenses * 0.35);
-
-                        mainFaturamento = [tMargin];
-                        const cFixo = state.team.reduce(function(a, c) { return a + Number(c.cost || 0); }, 0);
-                        mainCustos = [cFixo];
+                        let tFatBruto = moTrans.reduce(function(a, c) { return a + Number(c.value || 0); }, 0);
+                        mainFaturamento = [tFatBruto];
+                        
+                        let cVarFornecedores = 0;
+                        getValidExpenses(state.selectedMonth).forEach(function(e) { cVarFornecedores += Number(e.amount || 0); });
+                        const cFixo = getValidTeam(state.selectedMonth).reduce(function(a, c) { return a + Number(c.cost || 0); }, 0);
+                        
+                        mainCustos = [cFixo + cVarFornecedores];
                     }
                 } else {
                     const isAll = state.filterMode === 'all';
-                    const contextYear = isAll ? 'Todo o Período' : state.selectedYear;
-                    const yearClosures = isAll ? state.closures : state.closures.filter(function(c) { return c.month && c.month.startsWith(state.selectedYear); });
-                    const sorted = yearClosures.sort(function(a,b) { return a.month.localeCompare(b.month); });
+                    const closuresToUse = isAll ? state.closures : state.closures.filter(function(c) { return c.month && c.month.startsWith(state.selectedYear); });
+                    const sorted = closuresToUse.sort(function(a,b) { return a.month.localeCompare(b.month); });
                     mainLabels = sorted.map(function(c) { 
                         if(c.month) {
                             const p = c.month.split('-'); 
@@ -730,7 +1436,7 @@
                         }
                         return '';
                     });
-                    mainFaturamento = sorted.map(function(c) { return Number(c.margemTotalRealizada || 0); });
+                    mainFaturamento = sorted.map(function(c) { return Number(c.mrrBrutoRealizado || 0); });
                     mainCustos = sorted.map(function(c) { return Number(c.custosTotais || 0); });
                 }
 
@@ -753,14 +1459,13 @@
                         }
                     });
                 } else {
-                    const mainColors = mainFaturamento.map(function(f, i) { return f >= mainCustos[i] ? '#10b981' : '#ef4444'; });
                     state.chartInstance = new Chart(ctx, {
-                        type: 'bar',
+                        type: 'line',
                         data: { 
                             labels: mainLabels, 
                             datasets: [
-                                { label: 'Faturamento (Margem Realizada)', data: mainFaturamento, backgroundColor: mainColors, borderRadius: 4 }, 
-                                { label: 'Custos Totais (Equipe)', data: mainCustos, backgroundColor: '#4b5563', borderRadius: 4 }
+                                { type: 'line', label: 'Faturamento Bruto', data: mainFaturamento, borderColor: '#3b82f6', backgroundColor: '#3b82f6', tension: 0.3, borderWidth: 3 }, 
+                                { type: 'bar', label: 'Custos Totais', data: mainCustos, backgroundColor: '#4b5563', borderRadius: 4 }
                             ] 
                         },
                         options: { 
@@ -801,11 +1506,12 @@
 
                     if (state.filterMode === 'forecast') {
                         mLabels = ['Projeção'];
+                        const validExpenses = state.expenses;
                         const margin = state.clients.filter(function(c) { return c.status !== 'Churn'; }).reduce(function(sum, c) {
                             const isOT = isClientOTActive(c, state.selectedMonth);
                             const cFat = Number(c.recurringValue || 0) + (isOT ? Number(c.oneTimeValue || 0) : 0);
                             let cSup = 0;
-                            state.expenses.forEach(function(e) { if(e.clientId === c.id) cSup += Number(e.amount || 0); });
+                            validExpenses.forEach(function(e) { if(e.clientId === c.id) cSup += Number(e.amount || 0); });
                             return sum + (calcFinancials(cFat, cSup, 0).margem * getMemberPct(c, member.id));
                         }, 0);
                         mMargins = [margin]; 
@@ -818,12 +1524,13 @@
                             mCosts = [memberCost];
                         } else {
                             const moTrans = state.transactions.filter(function(t) { return t.month === state.selectedMonth; });
+                            const validExpenses = getValidExpenses(state.selectedMonth);
                             const margin = state.clients.reduce(function(sum, c) {
                                 if(c.status === 'Churn' && !moTrans.some(t => t.clientId === c.id)) return sum;
                                 const cTrans = moTrans.filter(function(t) { return t.clientId === c.id; });
                                 const cFat = cTrans.reduce(function(a, t) { return a + Number(t.value || 0); }, 0);
                                 let cSup = 0;
-                                state.expenses.forEach(function(e) { if(e.clientId === c.id) cSup += Number(e.amount || 0); });
+                                validExpenses.forEach(function(e) { if(e.clientId === c.id) cSup += Number(e.amount || 0); });
                                 return sum + (calcFinancials(cFat, cSup, 0).margem * getMemberPct(c, member.id));
                             }, 0);
                             mMargins = [margin]; 
@@ -941,7 +1648,6 @@
 
             if (mode === 'forecast') {
                 let totalFat = 0;
-                let totalMargin = 0;
                 let cVarFornecedores = 0;
 
                 state.clients.forEach(function(c) {
@@ -953,53 +1659,45 @@
                     let cSup = 0;
                     state.expenses.forEach(function(e) { if(e.clientId === c.id) cSup += Number(e.amount || 0); });
                     cVarFornecedores += cSup;
-
-                    totalMargin += calcFinancials(cFat, cSup, 0).margem;
                 });
 
                 let generalExpenses = 0;
                 state.expenses.forEach(function(e) { if (!e.clientId) generalExpenses += Number(e.amount || 0); });
                 cVarFornecedores += generalExpenses;
-                totalMargin -= (generalExpenses * 0.35);
 
                 const cFixo = state.team.reduce(function(a, c) { return a + Number(c.cost || 0); }, 0);
-                const lucroPrevisto = totalMargin - cFixo;
+                
+                const fin = calcFinancials(totalFat, cVarFornecedores, cFixo);
 
                 return `
                     <div class="space-y-6 animate-fade-in">
-                        <div class="bg-blue-900/10 border border-blue-900/30 rounded-xl p-4 flex items-start gap-3 shadow-inner">
-                            <i data-lucide="info" class="text-blue-400 w-5 h-5 flex-shrink-0 mt-0.5"></i>
-                            <p class="text-sm text-blue-200/80 leading-relaxed"><strong>Visão Prevista (Run Rate):</strong> Projetando faturamento, margem e custos como se todos os contratos fossem faturados hoje, calculando a nova margem limpa em cascata (Faturamento -> Royalties -> Impostos -> Fornecedores -> 35%).</p>
-                        </div>
-
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                             <div class="p-6 rounded-2xl bg-gradient-to-br from-[#111] to-[#0a0a0a] border border-[#222] shadow-lg relative overflow-hidden group">
                                 <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity"><i data-lucide="trending-up" class="w-16 h-16 text-gray-400"></i></div>
-                                <h3 class="text-gray-400 text-xs uppercase font-bold tracking-widest mb-2 flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-blue-500"></div> Faturamento Previsto (Bruto)</h3>
-                                <div class="text-3xl font-bold text-white mb-1">${formatCurrency(totalFat)}</div>
+                                <h3 class="text-gray-400 text-xs uppercase font-bold tracking-widest mb-2 flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-blue-500"></div> Faturamento Bruto Previsto</h3>
+                                <div class="text-3xl font-bold text-white mb-1">${formatCurrency(fin.fatBruto)}</div>
                                 <p class="text-xs text-gray-600 font-medium mt-2">Soma de todos contratos ativos.</p>
                             </div>
                             
-                            <div class="p-6 rounded-2xl bg-gradient-to-br from-emerald-950/20 to-[#0a0a0a] border border-emerald-900/30 shadow-lg relative overflow-hidden group">
-                                <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity"><i data-lucide="dollar-sign" class="w-16 h-16 text-emerald-500"></i></div>
-                                <h3 class="text-emerald-500 text-xs uppercase font-bold tracking-widest mb-2 flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div> Margem DFC Realizada</h3>
-                                <div class="text-3xl font-bold text-white mb-1">${formatCurrency(totalMargin)}</div>
-                                <p class="text-xs text-gray-500 font-medium mt-2 border-t border-emerald-900/30 pt-2">Líquido de Roy/Imp/Forn x 35%</p>
+                            <div class="p-6 rounded-2xl bg-gradient-to-br from-blue-950/20 to-[#0a0a0a] border border-blue-900/30 shadow-lg relative overflow-hidden group">
+                                <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity"><i data-lucide="filter" class="w-16 h-16 text-blue-500"></i></div>
+                                <h3 class="text-blue-500 text-xs uppercase font-bold tracking-widest mb-2 flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div> Faturamento Líquido</h3>
+                                <div class="text-3xl font-bold text-white mb-1">${formatCurrency(fin.fat_liquido)}</div>
+                                <p class="text-xs text-gray-500 font-medium mt-2 border-t border-blue-900/30 pt-2">-15% Roy, -14,25% Imp e Ferramentas</p>
                             </div>
                             
-                            <div class="p-6 rounded-2xl ${lucroPrevisto >= 0 ? 'bg-gradient-to-br from-emerald-900/40 to-emerald-950/10 border-emerald-500/50' : 'bg-gradient-to-br from-red-900/40 to-red-950/10 border-red-500/50'} border shadow-lg relative overflow-hidden group">
-                                <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity"><i data-lucide="wallet" class="w-16 h-16 ${lucroPrevisto>=0?'text-emerald-400':'text-red-400'}"></i></div>
-                                <h3 class="text-white/70 text-xs uppercase font-bold tracking-widest mb-2">Lucro Líquido (Pós Equipe)</h3>
-                                <div class="text-4xl font-black text-white">${formatCurrency(lucroPrevisto)}</div>
-                                <p class="text-xs text-white/50 font-medium mt-2 border-t border-[#333]/50 pt-2 flex justify-between"><span>Equipe:</span><span class="text-red-400 font-bold">-${formatCurrency(cFixo)}</span></p>
+                            <div class="p-6 rounded-2xl ${fin.lucro >= 0 ? 'bg-gradient-to-br from-emerald-900/40 to-emerald-950/10 border-emerald-500/50' : 'bg-gradient-to-br from-red-900/40 to-red-950/10 border-red-500/50'} border shadow-lg relative overflow-hidden group">
+                                <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity"><i data-lucide="wallet" class="w-16 h-16 ${fin.lucro>=0?'text-emerald-400':'text-red-400'}"></i></div>
+                                <h3 class="text-white/70 text-xs uppercase font-bold tracking-widest mb-2">Lucro Projetado (Final)</h3>
+                                <div class="text-4xl font-black text-white">${formatCurrency(fin.lucro)}</div>
+                                <p class="text-xs text-white/50 font-medium mt-2 border-t border-[#333]/50 pt-2 flex justify-between"><span>Equipe/Manut:</span><span class="text-red-400 font-bold">-${formatCurrency(cFixo)}</span></p>
                             </div>
                         </div>
 
-                        <!-- Gráficos Integrados -->
                         <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-6">
                             <div class="bg-[#111] border border-[#222] rounded-2xl p-6 shadow-xl flex flex-col">
                                 <div class="flex items-center justify-between mb-6">
-                                    <h3 class="text-xl font-bold text-white tracking-tight">Análise de Faturamento vs Custo</h3>
+                                    <h3 class="text-xl font-bold text-white tracking-tight">Evolução Mês a Mês</h3>
                                     <span class="text-[10px] text-red-300 bg-red-900/20 border border-red-900/50 px-2 py-1 rounded font-bold uppercase tracking-wider">Projeção Atual</span>
                                 </div>
                                 <div class="h-80 w-full relative flex-1">
@@ -1009,42 +1707,19 @@
 
                             <div class="bg-[#111] border border-[#222] rounded-2xl p-6 shadow-xl flex flex-col">
                                 <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
-                                    <h3 class="text-xl font-bold text-white tracking-tight">Desempenho por Integrante</h3>
-                                    <select onchange="window.appActions.setMemberChart(this.value)" class="bg-[#1a1a1a] border border-[#333] rounded-lg px-3 py-2 text-sm text-white font-bold focus:outline-none focus:border-red-500 cursor-pointer">
-                                        ${state.team.length === 0 ? '<option value="">Sem Equipe</option>' : state.team.map(function(m) { return `<option value="${escapeHTML(m.id)}" ${state.selectedMemberId === m.id ? 'selected' : ''}>${escapeHTML(m.name)}</option>`; }).join('')}
-                                    </select>
+                                    <h3 class="text-xl font-bold text-white tracking-tight">Extrato Detalhado DFC (Simulação)</h3>
                                 </div>
-                                <div class="h-80 w-full relative flex-1">
-                                    <canvas id="memberChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-                            <div class="bg-[#111] border border-[#222] rounded-2xl p-6 shadow-lg">
-                                <h3 class="text-base font-bold text-white mb-5 uppercase tracking-wide border-b border-[#333] pb-3">Composição do Faturamento Bruto</h3>
-                                <div class="space-y-4">
-                                    <div class="bg-[#0a0a0a] rounded-xl border border-[#333] p-4 flex items-center justify-between">
-                                        <div class="flex items-center gap-3"><div class="p-2 bg-blue-900/30 text-blue-400 rounded-lg"><i data-lucide="repeat" class="w-4 h-4"></i></div> <span class="font-medium text-gray-300">Total MRR (Recorrente)</span></div>
-                                        <span class="font-bold text-white">${formatCurrency(state.clients.filter(c => c.status !== 'Churn').reduce((a,c)=>a+Number(c.recurringValue||0),0))}</span>
-                                    </div>
-                                    <div class="bg-[#0a0a0a] rounded-xl border border-[#333] p-4 flex items-center justify-between">
-                                        <div class="flex items-center gap-3"><div class="p-2 bg-purple-900/30 text-purple-400 rounded-lg"><i data-lucide="zap" class="w-4 h-4"></i></div> <span class="font-medium text-gray-300">Total One Time (Este mês)</span></div>
-                                        <span class="font-bold text-white">${formatCurrency(state.clients.filter(c => c.status !== 'Churn' && isClientOTActive(c, state.selectedMonth)).reduce((a,c)=>a+Number(c.oneTimeValue||0),0))}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bg-[#111] border border-[#222] rounded-2xl p-0 shadow-lg overflow-hidden flex flex-col">
-                                <h3 class="text-base font-bold text-white m-6 mb-0 uppercase tracking-wide">Resumo de Saídas (Custos)</h3>
-                                <div class="flex-1 p-6 flex flex-col justify-center">
-                                    <div class="bg-[#0a0a0a] rounded-xl border border-[#333] p-4 flex items-center justify-between mb-3">
-                                        <div class="flex items-center gap-3"><div class="p-2 bg-orange-900/30 text-orange-400 rounded-lg"><i data-lucide="building" class="w-4 h-4"></i></div> <span class="font-medium text-gray-300">Fornecedores (Sai antes dos 35%)</span></div>
-                                        <span class="font-bold text-red-400">-${formatCurrency(cVarFornecedores)}</span>
-                                    </div>
-                                    <div class="bg-[#0a0a0a] rounded-xl border border-[#333] p-4 flex items-center justify-between">
-                                        <div class="flex items-center gap-3"><div class="p-2 bg-red-900/30 text-red-400 rounded-lg"><i data-lucide="users" class="w-4 h-4"></i></div> <span class="font-medium text-gray-300">Equipe (Sai depois da Margem)</span></div>
-                                        <span class="font-bold text-red-400">-${formatCurrency(cFixo)}</span>
-                                    </div>
+                                <div class="flex-1 overflow-y-auto pr-2 space-y-1">
+                                    <div class="flex justify-between items-center text-sm py-2 border-b border-[#222]"><span class="text-gray-400 font-medium">Faturamento Bruto</span><span class="font-bold text-white">${formatCurrency(fin.fatBruto)}</span></div>
+                                    <div class="flex justify-between items-center text-sm py-2 border-b border-[#222]"><span class="text-gray-400 font-medium">- 15% Royalties</span><span class="font-bold text-red-400">-${formatCurrency(fin.fatBruto - fin.fb_royalts)}</span></div>
+                                    <div class="flex justify-between items-center text-sm py-2 border-b border-[#222]"><span class="text-gray-500 font-bold uppercase text-[10px] tracking-wider">(=) FB - Royalts</span><span class="font-bold text-gray-300">${formatCurrency(fin.fb_royalts)}</span></div>
+                                    <div class="flex justify-between items-center text-sm py-2 border-b border-[#222]"><span class="text-gray-400 font-medium">- 14,25% Impostos</span><span class="font-bold text-red-400">-${formatCurrency(fin.fb_royalts - fin.fr_imposto)}</span></div>
+                                    <div class="flex justify-between items-center text-sm py-2 border-b border-[#222]"><span class="text-gray-500 font-bold uppercase text-[10px] tracking-wider">(=) FR - Imposto</span><span class="font-bold text-gray-300">${formatCurrency(fin.fr_imposto)}</span></div>
+                                    <div class="flex justify-between items-center text-sm py-2 border-b border-[#222]"><span class="text-gray-400 font-medium">- Custo Ferramentas/Fornecedores</span><span class="font-bold text-red-400">-${formatCurrency(fin.custoFerramenta)}</span></div>
+                                    <div class="flex justify-between items-center text-sm py-2 border-b border-blue-900/50 bg-blue-950/10 rounded px-2"><span class="text-blue-400 font-black uppercase text-xs tracking-wider">(=) Faturamento Líquido</span><span class="font-black text-blue-400">${formatCurrency(fin.fat_liquido)}</span></div>
+                                    <div class="flex justify-between items-center text-sm py-2 border-b border-emerald-900/50 bg-emerald-950/10 rounded px-2 mt-2"><span class="text-emerald-400 font-black uppercase text-xs tracking-wider">Margem DFC (35% do F.L.)</span><span class="font-black text-emerald-400">${formatCurrency(fin.margem)}</span></div>
+                                    <div class="flex justify-between items-center text-sm py-2 border-b border-[#222]"><span class="text-gray-400 font-medium">- Custos Time / Manutenções</span><span class="font-bold text-red-400">-${formatCurrency(fin.custoTimeManut)}</span></div>
+                                    <div class="flex justify-between items-center text-sm py-3 mt-2"><span class="text-white font-black uppercase tracking-wider">LUCRO FINAL</span><span class="font-black text-xl ${fin.lucro>=0?'text-emerald-500':'text-red-500'}">${formatCurrency(fin.lucro)}</span></div>
                                 </div>
                             </div>
                         </div>
@@ -1057,9 +1732,15 @@
                 const closuresToUse = isAll ? state.closures : state.closures.filter(function(c) { return c.month && c.month.startsWith(state.selectedYear); });
                 
                 const realMRR = closuresToUse.reduce(function(a, c) { return a + Number(c.mrrBrutoRealizado||0); }, 0);
+                
+                // Recalcular Histórico com a nova fórmula (para o caso de meses antigos gravados com a velha)
+                const cFixo = closuresToUse.reduce(function(a, c) { return a + Number(c.custosTotais||0); }, 0); 
+                
+                // As despesas (Fornecedores) nos fechamentos antigos não eram separadas. 
+                // Assumiremos a margem salva como a DFC, ou o Lucro salvo como correto.
                 const realMargin = closuresToUse.reduce(function(a, c) { return a + Number(c.margemTotalRealizada||0); }, 0);
                 const lucro = closuresToUse.reduce(function(a, c) { return a + Number(c.lucroLiquido||0); }, 0);
-                const cFixo = closuresToUse.reduce(function(a, c) { return a + Number(c.custosTotais||0); }, 0); 
+                
                 const monthsClosed = closuresToUse.length;
                 const avgProfit = monthsClosed > 0 ? lucro / monthsClosed : 0;
 
@@ -1068,16 +1749,16 @@
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                             <div class="p-6 rounded-2xl bg-gradient-to-br from-[#111] to-[#0a0a0a] border border-[#222] shadow-lg relative overflow-hidden group">
                                 <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity"><i data-lucide="trending-up" class="w-16 h-16 text-gray-400"></i></div>
-                                <h3 class="text-gray-400 text-xs uppercase font-bold tracking-widest mb-2 flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-gray-500"></div> MRR Bruto Realizado (${escapeHTML(contextYear)})</h3>
+                                <h3 class="text-gray-400 text-xs uppercase font-bold tracking-widest mb-2 flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-gray-500"></div> Faturamento Bruto Histórico (${escapeHTML(contextYear)})</h3>
                                 <div class="text-3xl font-bold text-white mb-1">${formatCurrency(realMRR)}</div>
-                                <p class="text-xs text-gray-600 font-medium mt-2">Total bruto de todos os meses fechados.</p>
+                                <p class="text-xs text-gray-600 font-medium mt-2">Soma bruta de todos os meses fechados.</p>
                             </div>
                             
                             <div class="p-6 rounded-2xl bg-gradient-to-br from-emerald-950/20 to-[#0a0a0a] border border-emerald-900/30 shadow-lg relative overflow-hidden group">
                                 <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity"><i data-lucide="dollar-sign" class="w-16 h-16 text-emerald-500"></i></div>
-                                <h3 class="text-emerald-500 text-xs uppercase font-bold tracking-widest mb-2 flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-emerald-500"></div> Margem DFC Gerada (${escapeHTML(contextYear)})</h3>
+                                <h3 class="text-emerald-500 text-xs uppercase font-bold tracking-widest mb-2 flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-emerald-500"></div> Margem DFC Histórica</h3>
                                 <div class="text-3xl font-bold text-white mb-1">${formatCurrency(realMargin)}</div>
-                                <p class="text-xs text-gray-500 font-medium mt-2 border-t border-emerald-900/30 pt-2 flex justify-between"><span>Custos Totais:</span><span class="text-red-400 font-bold">-${formatCurrency(cFixo)}</span></p>
+                                <p class="text-xs text-gray-500 font-medium mt-2 border-t border-emerald-900/30 pt-2 flex justify-between"><span>Margens extraídas em ${monthsClosed} meses.</span></p>
                             </div>
                             
                             <div class="p-6 rounded-2xl ${lucro >= 0 ? 'bg-gradient-to-br from-emerald-900/40 to-emerald-950/10 border-emerald-500/50' : 'bg-gradient-to-br from-red-900/40 to-red-950/10 border-red-500/50'} border shadow-lg relative overflow-hidden group">
@@ -1099,50 +1780,10 @@
                                 </div>
                             </div>
 
-                            <div class="bg-[#111] border border-[#222] rounded-2xl p-6 shadow-xl flex flex-col">
-                                <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
-                                    <h3 class="text-xl font-bold text-white tracking-tight">Desempenho por Integrante</h3>
-                                    <select onchange="window.appActions.setMemberChart(this.value)" class="bg-[#1a1a1a] border border-[#333] rounded-lg px-3 py-2 text-sm text-white font-bold focus:outline-none focus:border-red-500 cursor-pointer">
-                                        ${state.team.length === 0 ? '<option value="">Sem Equipe</option>' : state.team.map(function(m) { return `<option value="${escapeHTML(m.id)}" ${state.selectedMemberId === m.id ? 'selected' : ''}>${escapeHTML(m.name)}</option>`; }).join('')}
-                                    </select>
-                                </div>
-                                <div class="h-80 w-full relative flex-1">
-                                    <canvas id="memberChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-                            <div class="bg-[#111] border border-[#222] rounded-2xl p-6 shadow-lg">
-                                <h3 class="text-base font-bold text-white mb-5 uppercase tracking-wide border-b border-[#333] pb-3">Resumo (${escapeHTML(contextYear)})</h3>
-                                <div class="space-y-4">
-                                    <div class="bg-[#0a0a0a] rounded-xl border border-[#333] p-4 flex items-center justify-between">
-                                        <span class="font-medium text-gray-400">Meses Fechados</span>
-                                        <span class="font-bold text-white">${monthsClosed} ${isAll ? 'meses' : 'de 12'}</span>
-                                    </div>
-                                    <div class="bg-[#0a0a0a] rounded-xl border border-[#333] p-4 flex items-center justify-between">
-                                        <span class="font-medium text-gray-400">Média de Lucro Mensal</span>
-                                        <span class="font-bold ${avgProfit >= 0 ? 'text-emerald-400' : 'text-red-400'}">${formatCurrency(avgProfit)}</span>
-                                    </div>
-                                    <div class="bg-[#0a0a0a] rounded-xl border border-[#333] p-4 flex items-center justify-between">
-                                        <span class="font-medium text-gray-400">Total de Custos Fixos Pagos</span>
-                                        <span class="font-bold text-red-400">-${formatCurrency(cFixo)}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="bg-[#111] border border-[#222] rounded-2xl p-0 shadow-lg overflow-hidden flex flex-col">
-                                <h3 class="text-base font-bold text-white m-6 mb-0 uppercase tracking-wide">Resumo Estrutural Consolidado</h3>
-                                <div class="flex-1 p-6 flex flex-col justify-center">
-                                    <div class="bg-[#0a0a0a] rounded-xl border border-[#333] p-4 flex items-center justify-between mb-3">
-                                        <div class="flex items-center gap-3"><div class="p-2 bg-emerald-900/30 text-emerald-400 rounded-lg"><i data-lucide="arrow-down-to-line" class="w-4 h-4"></i></div> <span class="font-medium text-gray-300">Total Receitas (Margem)</span></div>
-                                        <span class="font-bold text-white">${formatCurrency(realMargin)}</span>
-                                    </div>
-                                    <div class="bg-[#0a0a0a] rounded-xl border border-[#333] p-4 flex items-center justify-between mb-3">
-                                        <div class="flex items-center gap-3"><div class="p-2 bg-red-900/30 text-red-400 rounded-lg"><i data-lucide="users" class="w-4 h-4"></i></div> <span class="font-medium text-gray-300">Custos Totais (Equipe + Fornec.)</span></div>
-                                        <span class="font-bold text-red-400">-${formatCurrency(cFixo)}</span>
-                                    </div>
-                                </div>
+                            <div class="bg-[#111] border border-[#222] rounded-2xl p-6 shadow-xl flex flex-col justify-center items-center text-center">
+                                <i data-lucide="history" class="w-16 h-16 text-gray-600 mb-4 opacity-50"></i>
+                                <h3 class="text-lg font-bold text-gray-300">Resumo Histórico</h3>
+                                <p class="text-sm text-gray-500 mt-2 max-w-sm">Este painel reflete exatamente os dados guardados em "Fechamentos do Mês". Altere os valores na aba de histórico se precisar de ajustes retroativos.</p>
                             </div>
                         </div>
                     </div>
@@ -1151,8 +1792,7 @@
                 // --- VISÃO MENSAL (ACOMPANHAMENTO MÊS ATUAL) ---
                 const closedMonth = state.closures.find(function(c) { return c.month === state.selectedMonth; });
                 
-                let realMRR = 0, realOT = 0, realMargin = 0, cFixo = 0, cVarFornecedores = 0, lucro = 0;
-                let prevMRR = 0, prevOT = 0;
+                let realMRR = 0, realOT = 0, realMargin = 0, cFixo = 0, cVarFornecedores = 0, lucro = 0, fatLiquido = 0;
                 let isLocked = false;
                 
                 if (closedMonth) {
@@ -1161,42 +1801,27 @@
                     realMargin = Number(closedMonth.margemTotalRealizada || 0);
                     lucro = Number(closedMonth.lucroLiquido || 0);
                     cFixo = Number(closedMonth.custosTotais || 0);
-                    cVarFornecedores = 0; 
-                    
-                    prevMRR = realMRR;
-                    prevOT = 0;
-                    realOT = 0; 
+                    cVarFornecedores = 0; // Histórico não guardava essa separação, mostra zero para não quebrar.
+                    fatLiquido = realMargin / 0.35; // Matemática reversa pro display não ficar vazio
                 } else {
-                    const activeC = state.clients.filter(function(c) { return c.status !== 'Churn'; });
-                    prevMRR = activeC.reduce(function(a, c) { return a + Number(c.recurringValue || 0); }, 0);
-                    prevOT = activeC.reduce(function(a, c) { 
-                        if(isClientOTActive(c, state.selectedMonth)) return a + Number(c.oneTimeValue || 0);
-                        return a;
-                    }, 0);
-                    
                     const moTrans = state.transactions.filter(function(t) { return t.month === state.selectedMonth; });
                     realMRR = moTrans.filter(function(t) { return t.type === 'recorrente'; }).reduce(function(a, c) { return a + Number(c.value || 0); }, 0);
                     realOT = moTrans.filter(function(t) { return t.type === 'onetime'; }).reduce(function(a, c) { return a + Number(c.value || 0); }, 0);
                     
-                    state.clients.forEach(function(c) {
-                        if(c.status === 'Churn' && !moTrans.some(t => t.clientId === c.id)) return;
-                        const cTrans = moTrans.filter(function(t) { return t.clientId === c.id; });
-                        const cFat = cTrans.reduce(function(a, t) { return a + Number(t.value || 0); }, 0);
-                        let cSup = 0;
-                        state.expenses.forEach(function(e) { if(e.clientId === c.id) cSup += Number(e.amount || 0); });
-                        realMargin += calcFinancials(cFat, cSup, 0).margem;
-                    });
+                    const validExpenses = getValidExpenses(state.selectedMonth);
+                    const validTeam = getValidTeam(state.selectedMonth);
 
-                    let generalExpenses = 0;
-                    state.expenses.forEach(function(e) { if(!e.clientId) generalExpenses += Number(e.amount || 0); });
-                    realMargin -= (generalExpenses * 0.35);
-
-                    cFixo = state.team.reduce(function(a, c) { return a + Number(c.cost || 0); }, 0);
-                    lucro = realMargin - cFixo;
+                    let cSupTotal = 0;
+                    validExpenses.forEach(function(e) { cSupTotal += Number(e.amount || 0); });
+                    
+                    cFixo = validTeam.reduce(function(a, c) { return a + Number(c.cost || 0); }, 0);
+                    
+                    const fin = calcFinancials(realMRR + realOT, cSupTotal, cFixo);
+                    
+                    fatLiquido = fin.fat_liquido;
+                    realMargin = fin.margem;
+                    lucro = fin.lucro;
                 }
-
-                const barRecPercent = prevMRR > 0 ? Math.min(100, Math.round((realMRR / prevMRR) * 100)) : (isLocked ? 100 : 0);
-                const barOTPercent = prevOT > 0 ? Math.min(100, Math.round((realOT / prevOT) * 100)) : 0;
 
                 return `
                     <div class="space-y-6 animate-fade-in">
@@ -1205,19 +1830,19 @@
                                 <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity"><i data-lucide="trending-up" class="w-16 h-16 text-gray-400"></i></div>
                                 <h3 class="text-gray-400 text-xs uppercase font-bold tracking-widest mb-2 flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-gray-500"></div> Faturamento Bruto Recebido</h3>
                                 <div class="text-3xl font-bold text-white mb-1">${formatCurrency(realMRR + realOT)}</div>
-                                <p class="text-xs text-gray-600 font-medium mt-2">Valores de baixas realizadas.</p>
+                                <p class="text-xs text-gray-600 font-medium mt-2">Soma de recebimentos reais deste mês.</p>
                             </div>
                             
-                            <div class="p-6 rounded-2xl bg-gradient-to-br from-emerald-950/20 to-[#0a0a0a] border border-emerald-900/30 shadow-lg relative overflow-hidden group">
-                                <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity"><i data-lucide="dollar-sign" class="w-16 h-16 text-emerald-500"></i></div>
-                                <h3 class="text-emerald-500 text-xs uppercase font-bold tracking-widest mb-2 flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-emerald-50 animate-pulse"></div> Margem DFC Realizada</h3>
-                                <div class="text-3xl font-bold text-white mb-1">${formatCurrency(realMargin)}</div>
-                                <p class="text-xs text-gray-500 font-medium mt-2 border-t border-emerald-900/30 pt-2 flex justify-between"><span>Líquido de Roy/Imp/Forn x 35%</span></p>
+                            <div class="p-6 rounded-2xl bg-gradient-to-br from-blue-950/20 to-[#0a0a0a] border border-blue-900/30 shadow-lg relative overflow-hidden group">
+                                <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity"><i data-lucide="filter" class="w-16 h-16 text-blue-500"></i></div>
+                                <h3 class="text-blue-500 text-xs uppercase font-bold tracking-widest mb-2 flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div> Faturamento Líquido</h3>
+                                <div class="text-3xl font-bold text-white mb-1">${formatCurrency(fatLiquido)}</div>
+                                <p class="text-xs text-gray-500 font-medium mt-2 border-t border-blue-900/30 pt-2">-15% Roy, -14,25% Imp e Fornecedores</p>
                             </div>
                             
                             <div class="p-6 rounded-2xl ${lucro >= 0 ? 'bg-gradient-to-br from-emerald-900/40 to-emerald-950/10 border-emerald-500/50' : 'bg-gradient-to-br from-red-900/40 to-red-950/10 border-red-500/50'} border shadow-lg relative overflow-hidden group">
                                 <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity"><i data-lucide="wallet" class="w-16 h-16 ${lucro>=0?'text-emerald-400':'text-red-400'}"></i></div>
-                                <h3 class="text-white/70 text-xs uppercase font-bold tracking-widest mb-2">Lucro Líquido Final de ${escapeHTML(state.selectedMonth)}</h3>
+                                <h3 class="text-white/70 text-xs uppercase font-bold tracking-widest mb-2">Lucro Líquido Real (${escapeHTML(state.selectedMonth)})</h3>
                                 <div class="text-4xl font-black text-white">${formatCurrency(lucro)}</div>
                                 <p class="text-xs text-white/50 font-medium mt-2 border-t border-[#333]/50 pt-2 flex justify-between"><span>Equipe:</span><span class="text-red-400 font-bold">-${formatCurrency(cFixo)}</span></p>
                             </div>
@@ -1227,7 +1852,7 @@
                         <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-6">
                             <div class="bg-[#111] border border-[#222] rounded-2xl p-6 shadow-xl flex flex-col">
                                 <div class="flex items-center justify-between mb-6">
-                                    <h3 class="text-xl font-bold text-white tracking-tight">Análise de Faturamento vs Custo</h3>
+                                    <h3 class="text-xl font-bold text-white tracking-tight">Evolução do Mês a Mês</h3>
                                     <span class="text-[10px] text-red-300 bg-red-900/20 border border-red-900/50 px-2 py-1 rounded font-bold uppercase tracking-wider">${isLocked ? 'Dados do Fechamento' : 'Tempo Real'}</span>
                                 </div>
                                 <div class="h-80 w-full relative flex-1">
@@ -1235,16 +1860,12 @@
                                 </div>
                             </div>
 
-                            <div class="bg-[#111] border border-[#222] rounded-2xl p-6 shadow-xl flex flex-col">
-                                <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
-                                    <h3 class="text-xl font-bold text-white tracking-tight">Desempenho por Integrante</h3>
-                                    <select onchange="window.appActions.setMemberChart(this.value)" class="bg-[#1a1a1a] border border-[#333] rounded-lg px-3 py-2 text-sm text-white font-bold focus:outline-none focus:border-red-500 cursor-pointer">
-                                        ${state.team.length === 0 ? '<option value="">Sem Equipe</option>' : state.team.map(function(m) { return `<option value="${escapeHTML(m.id)}" ${state.selectedMemberId === m.id ? 'selected' : ''}>${escapeHTML(m.name)}</option>`; }).join('')}
-                                    </select>
+                            <div class="bg-[#111] border border-[#222] rounded-2xl p-6 shadow-xl flex flex-col justify-center items-center text-center">
+                                <div class="p-5 border border-emerald-900/50 bg-emerald-950/20 rounded-xl mb-4 text-emerald-400 w-full">
+                                    <span class="block text-xs uppercase tracking-wider font-bold mb-1">A sua Margem DFC Realizada</span>
+                                    <span class="text-3xl font-black">${formatCurrency(realMargin)}</span>
                                 </div>
-                                <div class="h-80 w-full relative flex-1">
-                                    <canvas id="memberChart"></canvas>
-                                </div>
+                                <p class="text-sm text-gray-500 mt-2 max-w-sm">No acompanhamento mensal, este quadro reflete os ganhos líquidos extraídos apenas de quem já pagou. Finalize as cobranças no painel Clientes para o número bater com a Projeção.</p>
                             </div>
                         </div>
                     </div>
@@ -1254,13 +1875,33 @@
 
         function getClientsHTML() {
             const moTrans = state.transactions.filter(function(t) { return t.month === state.selectedMonth; });
-            const list = state.clients.filter(function(c) { return state.clientFilter === 'Todos' || c.phase === state.clientFilter; });
+            
+            // Tratamento das abas
+            let list = state.clients;
+            if (state.clientFilter === 'Churn') {
+                list = list.filter(function(c) { return c.status === 'Churn'; });
+            } else if (state.clientFilter === 'Ativos') {
+                list = list.filter(function(c) { return c.status !== 'Churn'; });
+            } else {
+                list = list.filter(function(c) { return c.status !== 'Churn' && c.phase === state.clientFilter; });
+            }
+
+            // Ordenação: Pendentes no topo
+            list.sort(function(a, b) {
+                const aPaid = (Number(a.recurringValue) === 0 || moTrans.some(function(t) { return t.clientId === a.id && t.type === 'recorrente'; })) && 
+                              (Number(a.oneTimeValue) === 0 || moTrans.some(function(t) { return t.clientId === a.id && t.type === 'onetime'; }));
+                const bPaid = (Number(b.recurringValue) === 0 || moTrans.some(function(t) { return t.clientId === b.id && t.type === 'recorrente'; })) && 
+                              (Number(b.oneTimeValue) === 0 || moTrans.some(function(t) { return t.clientId === b.id && t.type === 'onetime'; }));
+                
+                if (aPaid === bPaid) return 0;
+                return aPaid ? 1 : -1; // -1 significa que A (pendente/false) sobe na lista
+            });
             
             let html = `
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
                     <div class="flex gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-hide">
-                        ${['Todos', 'Manutenção', 'Implementação', 'Tratativa'].map(function(p) {
-                            return `<button onclick="window.appActions.setClientFilter('${escapeJS(p)}')" class="px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 whitespace-nowrap ${state.clientFilter === p ? 'bg-red-600 text-white shadow-[0_0_15px_rgba(220,38,38,0.4)] transform scale-105' : 'bg-[#111] text-gray-400 border border-[#333] hover:border-gray-500 hover:text-white'}">${escapeHTML(p)}</button>`;
+                        ${['Ativos', 'Tratativa', 'Implementação', 'Manutenção', 'Churn'].map(function(p) {
+                            return `<button onclick="window.appActions.setClientFilter('${escapeJS(p)}')" data-filter="${escapeHTML(p)}" class="px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 whitespace-nowrap ${state.clientFilter === p ? (p==='Churn'?'bg-red-900 text-white shadow-[0_0_15px_rgba(220,38,38,0.4)] transform scale-105':'bg-emerald-600 text-white shadow-[0_0_15px_rgba(16,185,129,0.4)] transform scale-105') : 'bg-[#111] text-gray-400 border border-[#333] hover:border-gray-500 hover:text-white'}">${escapeHTML(p)}</button>`;
                         }).join('')}
                     </div>
                     <button onclick="window.appActions.openClientModal()" class="bg-white text-black px-6 py-2.5 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-gray-200 transition-transform hover:-translate-y-0.5 shadow-lg w-full md:w-auto"><i data-lucide="plus" class="w-4 h-4"></i> Cadastrar Projeto</button>
@@ -1269,8 +1910,10 @@
             `;
 
             if(list.length === 0) {
-                html += `<div class="col-span-full py-20 text-center text-gray-500 border border-dashed border-[#333] rounded-2xl bg-[#111]"><i data-lucide="ghost" class="w-10 h-10 mx-auto mb-4 opacity-50"></i>Nenhum cliente encontrado neste filtro.</div>`;
+                html += `<div class="col-span-full py-20 text-center text-gray-500 border border-dashed border-[#333] rounded-2xl bg-[#111]"><i data-lucide="ghost" class="w-10 h-10 mx-auto mb-4 opacity-50"></i>Nenhum projeto encontrado nesta categoria.</div>`;
             }
+
+            const validExpenses = getValidExpenses(state.selectedMonth);
 
             html += list.map(function(client) {
                 const cTrans = moTrans.filter(function(t) { return t.clientId === client.id; });
@@ -1281,7 +1924,7 @@
                 const otValueToSave = Number(client.oneTimeValue) || 0;
                 
                 let cSup = 0;
-                state.expenses.forEach(function(e) { if(e.clientId === client.id) cSup += Number(e.amount || 0); });
+                validExpenses.forEach(function(e) { if(e.clientId === client.id) cSup += Number(e.amount || 0); });
                 const mTotalProjetada = calcFinancials(recValueToSave + otValueToSave, cSup, 0).margem;
 
                 let teamBadges = '';
@@ -1290,9 +1933,6 @@
                         const m = state.team.find(function(x) { return x.id === alloc.memberId; });
                         return m ? `<span class="text-[10px] uppercase font-bold text-emerald-400 bg-emerald-900/20 border border-emerald-900/50 px-2 py-0.5 rounded flex items-center gap-1"><i data-lucide="user" class="w-3 h-3"></i> ${escapeHTML(m.name.split(' ')[0])} (${alloc.percentage}%)</span>` : '';
                     }).join('');
-                } else if (client.assignedMemberId) { 
-                    const m = state.team.find(function(x) { return x.id === client.assignedMemberId; });
-                    if (m) teamBadges = `<span class="text-[10px] uppercase font-bold text-emerald-400 bg-emerald-900/20 border border-emerald-900/50 px-2 py-0.5 rounded flex items-center gap-1"><i data-lucide="user" class="w-3 h-3"></i> ${escapeHTML(m.name.split(' ')[0])} (${client.memberPercentage||100}%)</span>`;
                 }
 
                 let recorrenteActionHTML = '';
@@ -1305,7 +1945,7 @@
                 }
                 
                 let onetimeActionHTML = '';
-                if(Number(client.oneTimeValue) > 0) {
+                if(Number(client.oneTimeValue) > 0 && isClientOTActive(client, state.selectedMonth)) {
                     if (otTrans) {
                         onetimeActionHTML = `<button onclick="window.appActions.removeBaixa('${escapeJS(otTrans.id)}')" class="text-xs bg-emerald-500/10 text-emerald-400 px-3 py-1.5 rounded-md border border-emerald-500/20 flex items-center gap-1.5 font-bold hover:bg-emerald-500/20 transition-colors"><i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Recebido</button>`;
                     } else {
@@ -1331,7 +1971,7 @@
                             
                             <div class="bg-[#0a0a0a] rounded-xl p-3 border border-[#222] mb-4">
                                 <div class="flex justify-between items-center text-xs">
-                                    <span class="text-gray-500 font-bold uppercase tracking-wider">Margem DFC Total Projetada</span>
+                                    <span class="text-gray-500 font-bold uppercase tracking-wider">Margem DFC Projetada</span>
                                     <span class="text-emerald-400 font-black">${formatCurrency(mTotalProjetada)}</span>
                                 </div>
                             </div>
@@ -1344,7 +1984,7 @@
                                     <div class="flex flex-col"><span class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">MRR Bruto</span><span class="font-bold text-gray-200 text-sm">${formatCurrency(client.recurringValue)}</span></div>
                                     ${recorrenteActionHTML}
                                 </div>` : ''}
-                            ${Number(client.oneTimeValue)>0 ? `
+                            ${Number(client.oneTimeValue)>0 && isClientOTActive(client, state.selectedMonth) ? `
                                 <div class="flex items-center justify-between bg-[#0a0a0a] p-2 rounded-lg border border-[#1a1a1a]">
                                     <div class="flex flex-col"><span class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">One Time</span><span class="font-bold text-gray-200 text-sm">${formatCurrency(client.oneTimeValue)}</span></div>
                                     ${onetimeActionHTML}
@@ -1357,421 +1997,35 @@
         }
 
         function getTeamHTML() {
+            const validExpenses = getValidExpenses(state.selectedMonth);
+            const validTeam = getValidTeam(state.selectedMonth);
+
+            const arrEquipe = validTeam.filter(function(t) { return !t.itemType || t.itemType === 'equipe'; });
+            const arrManutencao = validTeam.filter(function(t) { return t.itemType === 'manutencao'; });
+            
             let html = `
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 border-b border-[#222] pb-6">
                     <div>
                         <h2 class="text-2xl font-bold text-white tracking-tight">Equipe & Fornecedores</h2>
-                        <p class="text-sm text-gray-500 mt-1">Gerencie os custos deduzidos antes da margem (Ferramentas) e os deduzidos após a margem (Equipe).</p>
+                        <p class="text-sm text-gray-500 mt-1">Gerencie os custos pré-margem (Ferramentas) e pós-margem (Equipe / Manutenção).</p>
                     </div>
                     <button onclick="window.appActions.openItemModal(null, 'equipe')" class="bg-red-600 text-white px-6 py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-red-700 transition-transform hover:-translate-y-0.5 shadow-lg w-full md:w-auto"><i data-lucide="plus" class="w-4 h-4"></i> Novo Cadastro</button>
                 </div>
-                
-                <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">1. Membros da Equipe (Pós-Margem)</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-12">
             `;
-            if(state.team.length === 0) {
-                html += `<div class="col-span-full py-12 text-center border border-dashed border-[#333] rounded-2xl bg-[#111]"><p class="text-gray-400 font-medium">Nenhum membro cadastrado.</p></div>`;
-            } else {
-                html += state.team.map(function(member) {
-                    const memberClients = state.clients.filter(function(c) { return c.status !== 'Churn'; });
-                    const mrrMcGerado = memberClients.reduce(function(acc, c) {
-                        let pct = getMemberPct(c, member.id);
-                        let cSup = 0;
-                        state.expenses.forEach(function(e) { if(e.clientId === c.id) cSup += Number(e.amount || 0); });
-                        const isOT = isClientOTActive(c, state.selectedMonth);
-                        const cFat = Number(c.recurringValue||0) + (isOT ? Number(c.oneTimeValue||0) : 0);
-                        return acc + (calcFinancials(cFat, cSup, 0).margem * pct);
-                    }, 0);
 
-                    const activeProjects = memberClients.filter(function(c) {
-                        return c.teamAllocations && c.teamAllocations.some(function(a) { return a.memberId === member.id; });
+            // SEÇÃO 1: EQUIPE
+            html += `<h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2"><i data-lucide="users" class="w-5 h-5 text-gray-500"></i> Membros da Equipe (Pós-Margem)</h3>
+                     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-10">`;
+            if(arrEquipe.length === 0) {
+                html += `<div class="col-span-full py-8 text-center border border-dashed border-[#333] rounded-2xl bg-[#111]"><p class="text-gray-500 text-sm font-medium">Nenhum membro da equipa encontrado.</p></div>`;
+            } else {
+                html += arrEquipe.map(function(member) {
+                    const activeProjects = state.clients.filter(function(c) {
+                        return c.status !== 'Churn' && c.teamAllocations && c.teamAllocations.some(function(a) { return a.memberId === member.id; });
                     });
-
                     const mCost = Number(member.cost||0);
-                    const lucro = mrrMcGerado - mCost;
-                    
                     return `
-                    <div class="bg-[#111] border border-[#222] rounded-2xl p-6 relative group hover:border-[#444] transition-all duration-300 hover:-translate-y-1 shadow-lg flex flex-col cursor-pointer" onclick="window.appActions.openMemberDashboard('${escapeJS(member.id)}')">
+                    <div class="bg-[#111] border border-[#222] rounded-2xl p-6 relative group hover:border-[#444] transition-all duration-300 shadow-lg flex flex-col cursor-pointer" onclick="window.appActions.openMemberDashboard('${escapeJS(member.id)}')">
                         <div class="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
-                            <button onclick="event.stopPropagation(); window.appActions.openItemModal('${escapeJS(member.id)}', 'equipe')" class="w-8 h-8 flex items-center justify-center bg-[#222] rounded-lg text-gray-400 hover:text-white hover:bg-[#333]"><i data-lucide="edit-2" class="w-4 h-4"></i></button>
-                            <button onclick="event.stopPropagation(); window.appActions.deleteItem('${escapeJS(member.id)}', 'equipe')" class="w-8 h-8 flex items-center justify-center bg-[#222] rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-900/30"><i data-lucide="trash" class="w-4 h-4"></i></button>
-                        </div>
-                        <div class="flex items-center gap-4 mb-6">
-                            <div class="w-14 h-14 bg-gradient-to-br from-red-800 to-red-600 rounded-xl flex items-center justify-center text-2xl font-black text-white shadow-lg border border-red-500/50">${(escapeHTML(member.name).charAt(0) || 'U').toUpperCase()}</div>
-                            <div>
-                                <h3 class="font-black text-xl text-white tracking-tight">${escapeHTML(member.name)}</h3>
-                                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">${escapeHTML(member.role) || 'Membro da Equipe'}</p>
-                            </div>
-                        </div>
-                        <div class="space-y-1 bg-[#0a0a0a] rounded-xl p-4 border border-[#222] mb-5">
-                            <div class="flex justify-between items-center text-sm py-1"><span class="text-gray-500 font-medium">Salário / Custo Fixo:</span><span class="text-red-400 font-bold">-${formatCurrency(mCost)}</span></div>
-                            <div class="flex justify-between items-center text-sm py-1"><span class="text-gray-500 font-medium">Margem Gerada:</span><span class="text-emerald-400 font-bold">+${formatCurrency(mrrMcGerado)}</span></div>
-                            <div class="pt-2 mt-1 border-t border-[#333] flex justify-between items-center"><span class="text-xs font-black text-white uppercase tracking-wider">Líquido:</span><span class="font-black text-lg ${lucro>=0?'text-emerald-500':'text-red-500'}">${formatCurrency(lucro)}</span></div>
-                        </div>
-                        <div class="mt-auto">
-                            <p class="text-[10px] text-gray-500 mb-2 uppercase font-bold tracking-widest flex items-center justify-between">
-                                <span>Projetos (${activeProjects.length})</span>
-                                <span class="text-gray-600 group-hover:text-red-400 transition-colors flex items-center gap-1"><i data-lucide="mouse-pointer-click" class="w-3 h-3"></i> Detalhes</span>
-                            </p>
-                            <div class="flex flex-wrap gap-2">
-                                ${activeProjects.map(function(c) {
-                                    const alloc = c.teamAllocations.find(function(a) { return a.memberId === member.id; });
-                                    const p = alloc ? alloc.percentage : 100;
-                                    return `<span class="text-[10px] font-bold text-gray-300 bg-[#222] border border-[#333] px-2 py-1 rounded flex items-center gap-1">${escapeHTML(c.name)} <span class="text-red-500">${p}%</span></span>`;
-                                }).join('')}
-                            </div>
-                        </div>
-                    </div>`;
-                }).join('');
-            }
-            html += `</div>`;
-
-            html += `<h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">2. Fornecedores / Ferramentas (Pré-Margem)</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">`;
-            
-            if(state.expenses && state.expenses.length === 0) {
-                html += `<div class="col-span-full py-12 text-center border border-dashed border-[#333] rounded-2xl bg-[#111]"><p class="text-gray-400 font-medium">Nenhum custo / fornecedor cadastrado.</p></div>`;
-            } else if(state.expenses) {
-                html += state.expenses.map(function(exp) {
-                    const client = state.clients.find(function(c) { return c.id === exp.clientId; });
-                    return `
-                        <div class="bg-[#111] border border-[#222] rounded-2xl p-6 relative group hover:border-[#444] transition-all duration-300 shadow-lg flex flex-col justify-between">
-                            <div class="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
-                                <button onclick="window.appActions.openItemModal('${escapeJS(exp.id)}', 'fornecedor')" class="w-8 h-8 flex items-center justify-center bg-[#222] rounded-lg text-gray-400 hover:text-white hover:bg-[#333]"><i data-lucide="edit-2" class="w-4 h-4"></i></button>
-                                <button onclick="window.appActions.deleteItem('${escapeJS(exp.id)}', 'fornecedor')" class="w-8 h-8 flex items-center justify-center bg-[#222] rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-900/30"><i data-lucide="trash" class="w-4 h-4"></i></button>
-                            </div>
-                            <h3 class="font-bold text-lg text-white mb-1 pr-16">${escapeHTML(exp.name)}</h3>
-                            <p class="text-[10px] font-bold uppercase tracking-wider ${client ? 'text-blue-400 bg-blue-900/20 border-blue-900/50' : 'text-gray-400 bg-[#222] border-[#333]'} px-2.5 py-1 rounded inline-block mb-4 border w-max">${client ? '<i data-lucide="folder" class="w-3 h-3 inline mr-1"></i> Projeto: ' + escapeHTML(client.name) : '<i data-lucide="globe" class="w-3 h-3 inline mr-1"></i> Custo Geral Operacional'}</p>
-                            <div class="text-2xl font-black text-red-400 mt-2">-${formatCurrency(exp.amount)} <span class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">/mês</span></div>
-                        </div>
-                    `;
-                }).join('');
-            }
-            html += `</div>`;
-
-            return html;
-        }
-
-        function getClosureHTML() {
-            const moTrans = state.transactions.filter(function(t) { return t.month === state.selectedMonth; });
-            const isLocked = state.closures.some(function(c) { return c.month === state.selectedMonth && c.locked; });
-            
-            let html = `
-                <div class="bg-[#111] border border-[#222] rounded-2xl overflow-hidden shadow-2xl animate-fade-in">
-                    <div class="p-6 md:p-8 border-b border-[#222] bg-[#141414] flex flex-col md:flex-row md:justify-between md:items-center gap-4 relative overflow-hidden">
-                        <div class="absolute -top-24 -right-24 w-48 h-48 bg-red-900/20 rounded-full blur-3xl pointer-events-none"></div>
-                        
-                        <div class="relative z-10">
-                            <h2 class="text-2xl font-black text-white tracking-tight flex items-center gap-2">Fechamento do Mês: <span class="text-red-500">${escapeHTML(state.selectedMonth)}</span></h2>
-                            <p class="text-sm text-gray-400 mt-1">Cruze o previsto em contrato com o que realmente entrou em caixa.</p>
-                        </div>
-                        ${isLocked ? `<div class="relative z-10 bg-red-900/20 text-red-400 border border-red-900/50 px-4 py-2 rounded-lg text-xs font-black uppercase tracking-widest flex items-center gap-2 shadow-inner"><i data-lucide="lock" class="w-4 h-4"></i> Mês Travado no Histórico</div>` : ''}
-                    </div>
-                    
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
-                            <thead><tr class="bg-[#0a0a0a] border-b border-[#222] text-[10px] font-black uppercase tracking-widest text-gray-500">
-                                <th class="p-5">Nome do Cliente</th><th class="p-5 text-right">Previsto (Contrato)</th><th class="p-5 text-right">Realizado (Baixa)</th>
-                                <th class="p-5 text-right bg-[#111]">Margem Limpa DFC</th><th class="p-5 text-center">Status</th>
-                            </tr></thead>
-                            <tbody class="divide-y divide-[#222]">
-            `;
-
-            const validClients = state.clients.filter(function(c) { return c.status !== 'Churn' || (c.status === 'Churn' && moTrans.some(function(t) { return t.clientId === c.id; })); });
-            if(validClients.length === 0) {
-                html += `<tr><td colspan="5" class="p-10 text-center text-gray-500 italic">Não há projetos ativos na base para este mês.</td></tr>`;
-            }
-
-            let somaPrevRec=0, somaPrevOt=0, somaRealRec=0, somaRealOt=0, somaMargem=0;
-
-            validClients.forEach(function(client) {
-                const cTrans = moTrans.filter(function(t) { return t.clientId === client.id; });
-                const recT = cTrans.find(function(t) { return t.type === 'recorrente'; });
-                const otT = cTrans.find(function(t) { return t.type === 'onetime'; });
-                const pR = Number(client.recurringValue||0);
-                const pO = Number(client.oneTimeValue||0);
-                const rR = recT?Number(recT.value||0):0;
-                const rO = otT?Number(otT.value||0):0;
-                
-                let cSup = 0;
-                state.expenses.forEach(function(e) { if(e.clientId === client.id) cSup += Number(e.amount || 0); });
-                
-                const mTotal = calcFinancials(rR + rO, cSup, 0).margem;
-                
-                const isPaid = (pR===0 || rR>0) && (pO===0 || rO>0);
-                const isPend = (pR>0 && rR===0) || (pO>0 && rO===0);
-                
-                somaPrevRec+=pR; somaPrevOt+=pO; somaRealRec+=rR; somaRealOt+=rO; somaMargem+=mTotal;
-
-                let statusHTML = '<span class="text-gray-600 text-xs font-bold uppercase">-</span>';
-                if(isPaid && (pR>0||pO>0)) {
-                    statusHTML = '<span class="bg-emerald-900/20 text-emerald-400 border border-emerald-900/50 px-3 py-1 rounded text-[10px] uppercase font-bold tracking-wider inline-flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Tudo Pago</span>';
-                } else if(isPend) {
-                    statusHTML = '<span class="bg-amber-900/20 text-amber-500 border border-amber-900/50 px-3 py-1 rounded text-[10px] uppercase font-bold tracking-wider inline-flex items-center gap-1.5"><i data-lucide="clock" class="w-3.5 h-3.5"></i> Faltam Baixas</span>';
-                }
-
-                html += `
-                    <tr class="hover:bg-[#1a1a1a] transition-colors group">
-                        <td class="p-5 font-bold text-white text-sm">${escapeHTML(client.name)} ${client.status==='Churn'?'<span class="text-red-500 text-[9px] bg-red-900/20 px-1.5 py-0.5 rounded ml-2 uppercase tracking-wide border border-red-900/50 align-middle">Churn</span>':''}</td>
-                        <td class="p-5 text-right text-xs">
-                            ${pR>0?`<div class="text-gray-400">MRR: ${formatCurrency(pR)}</div>`:''}
-                            ${pO>0?`<div class="text-gray-500 mt-1">O.T.: ${formatCurrency(pO)}</div>`:''}
-                        </td>
-                        <td class="p-5 text-right text-xs">
-                            ${pR>0?`<div class="font-bold ${rR>0?'text-emerald-400':'text-gray-600'}">${rR>0?'Recebido ':'Pendente '}${formatCurrency(rR)}</div>`:''}
-                            ${pO>0?`<div class="font-bold mt-1 ${rO>0?'text-emerald-400':'text-gray-600'}">${rO>0?'Recebido ':'Pendente '}${formatCurrency(rO)}</div>`:''}
-                        </td>
-                        <td class="p-5 text-right bg-[#111] group-hover:bg-[#1a1a1a] transition-colors"><span class="text-emerald-500 font-mono font-bold">${formatCurrency(mTotal)}</span></td>
-                        <td class="p-5 text-center">${statusHTML}</td>
-                    </tr>
-                `;
-            });
-
-            let generalExpenses = 0;
-            state.expenses.forEach(function(e) { if(!e.clientId) generalExpenses += Number(e.amount || 0); });
-            somaMargem -= (generalExpenses * 0.35);
-
-            if(validClients.length > 0) {
-                 html += `
-                    <tr class="bg-[#0a0a0a] border-t-2 border-[#333]">
-                        <td class="p-5 font-black text-white text-sm uppercase tracking-widest text-right">TOTAL GERAL MÊS</td>
-                        <td class="p-5 text-right text-xs font-bold text-gray-400">MRR: ${formatCurrency(somaPrevRec)}<br/>O.T.: ${formatCurrency(somaPrevOt)}</td>
-                        <td class="p-5 text-right text-xs font-bold text-gray-200">MRR: ${formatCurrency(somaRealRec)}<br/>O.T.: ${formatCurrency(somaRealOt)}</td>
-                        <td class="p-5 text-right font-black text-emerald-400 text-lg">${formatCurrency(somaMargem)}</td>
-                        <td></td>
-                    </tr>
-                `;
-            }
-
-            html += `</tbody></table></div>
-                <div class="p-6 md:p-8 bg-[#050505] border-t border-[#222] flex flex-col md:flex-row justify-between gap-6 items-center rounded-b-2xl">
-                    <div class="text-xs text-gray-500 uppercase font-bold tracking-widest">
-                        Travar o mês salva a fotografia atual para análise no gráfico anual.
-                    </div>
-                    <div class="flex items-center gap-4 w-full md:w-auto">
-                        <button id="btn-lock-month" onclick="window.appActions.lockMonth()" class="w-full md:w-auto bg-red-600 hover:bg-red-700 text-white px-8 py-3.5 rounded-xl font-black uppercase tracking-wider text-xs flex items-center justify-center gap-2 transition-all shadow-lg shadow-red-900/40 hover:-translate-y-0.5"><i data-lucide="${isLocked ? 'refresh-cw' : 'lock'}" class="w-4 h-4"></i> ${isLocked ? 'Atualizar Travamento' : 'Congelar & Salvar Mês'}</button>
-                    </div>
-                </div></div>`;
-            return html;
-        }
-
-        function getHistoryHTML() {
-            let html = `
-                <div class="animate-fade-in">
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-                        <div>
-                            <h2 class="text-2xl font-bold text-white tracking-tight">Histórico de Fechamentos</h2>
-                            <p class="text-sm text-gray-500 mt-1">Acervo consolidado que alimenta os gráficos de evolução do negócio.</p>
-                        </div>
-                        <button onclick="window.appActions.openHistoryModal()" class="w-full md:w-auto bg-white text-black px-6 py-2.5 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-gray-200 transition-transform hover:-translate-y-0.5 shadow-lg"><i data-lucide="calendar-plus" class="w-4 h-4"></i> Inserir Mês Antigo (Manual)</button>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-            `;
-            if(state.closures.length === 0) {
-                html += `<div class="col-span-full py-20 text-center border border-dashed border-[#333] rounded-2xl bg-[#111]"><i data-lucide="history" class="w-12 h-12 mx-auto text-gray-600 mb-4 opacity-50"></i><p class="text-gray-300 font-bold text-lg">Banco de Histórico Vazio</p><p class="text-sm text-gray-500 mt-2">Nenhum mês foi travado na aba "Fechamento".</p></div>`;
-            } else {
-                html += state.closures.map(function(c) {
-                    return `
-                    <div class="bg-[#111] border border-[#222] rounded-2xl p-6 relative group hover:border-red-500/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-red-900/10 flex flex-col">
-                        <button onclick="window.appActions.openHistoryModal('${escapeJS(c.month)}')" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-[#222] rounded-lg text-gray-400 opacity-0 group-hover:opacity-100 hover:text-white hover:bg-[#333] transition-all"><i data-lucide="edit-3" class="w-4 h-4"></i></button>
-                        
-                        <div class="flex items-center gap-4 mb-6">
-                            <div class="w-14 h-14 bg-[#1a1a1a] rounded-xl flex items-center justify-center text-gray-400 shadow-inner border border-[#333] group-hover:bg-red-900/20 group-hover:border-red-500/30 group-hover:text-red-400 transition-colors"><i data-lucide="calendar-days" class="w-6 h-6"></i></div>
-                            <div>
-                                <h3 class="font-black text-2xl text-white tracking-tighter">${escapeHTML(c.month)}</h3>
-                                <span class="text-[9px] uppercase tracking-widest font-bold text-emerald-500 bg-emerald-900/20 border border-emerald-900/50 px-2 py-0.5 rounded flex items-center gap-1 w-max mt-1"><i data-lucide="lock" class="w-3 h-3"></i> Validado</span>
-                            </div>
-                        </div>
-                        
-                        <div class="bg-[#0a0a0a] rounded-xl p-4 border border-[#222] space-y-3 mb-4 flex-1">
-                            <div class="flex justify-between items-center"><span class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">MRR Bruto</span><span class="font-bold text-white text-sm">${formatCurrency(c.mrrBrutoRealizado)}</span></div>
-                            <div class="flex justify-between items-center border-t border-[#222] pt-3"><span class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Margem Entradas</span><span class="font-bold text-emerald-400 text-sm">+${formatCurrency(c.margemTotalRealizada)}</span></div>
-                            <div class="flex justify-between items-center border-t border-[#222] pt-3"><span class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Custos (Saídas)</span><span class="font-bold text-red-400 text-sm">-${formatCurrency(c.custosTotais)}</span></div>
-                        </div>
-                        
-                        <div class="pt-4 border-t border-[#222] flex justify-between items-center">
-                            <span class="text-[10px] text-gray-400 uppercase tracking-widest font-black">Líquido</span>
-                            <span class="font-black text-2xl ${Number(c.lucroLiquido||0)>=0?'text-emerald-500':'text-red-500'} tracking-tight">${formatCurrency(c.lucroLiquido)}</span>
-                        </div>
-                    </div>
-                `;}).join('');
-            }
-            return html + '</div></div>';
-        }
-
-        function getProfileHTML() {
-            const userName = state.user?.displayName || '';
-            const userEmail = state.user?.email || 'Acesso Visitante (Anônimo)';
-            const photoInitial = userName ? userName.charAt(0).toUpperCase() : (userEmail !== 'Acesso Visitante (Anônimo)' ? userEmail.charAt(0).toUpperCase() : 'V');
-            const hasPhoto = state.user?.photoURL ? true : false;
-            
-            return `
-                <div class="max-w-2xl mx-auto bg-[#111] border border-[#222] rounded-3xl shadow-2xl overflow-hidden animate-fade-in relative">
-                    <div class="absolute -top-32 -left-32 w-64 h-64 bg-red-900/20 rounded-full blur-3xl pointer-events-none"></div>
-                    <div class="h-36 bg-gradient-to-br from-red-950 to-[#050505] relative border-b border-[#222]"></div>
-                    <div class="px-8 pb-10 relative z-10">
-                        <div class="flex flex-col sm:flex-row items-center sm:items-end gap-6 -mt-16 mb-10 text-center sm:text-left">
-                            <div class="w-32 h-32 bg-[#0a0a0a] border-4 border-[#111] rounded-full flex items-center justify-center text-5xl font-black text-red-500 shadow-2xl overflow-hidden relative group transition-transform hover:scale-105 cursor-pointer">
-                                ${hasPhoto ? `<img src="${state.user.photoURL}" alt="Profile" class="w-full h-full object-cover"/>` : photoInitial}
-                                <label for="profile-photo-upload" class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center cursor-pointer transition-opacity backdrop-blur-sm">
-                                    <i data-lucide="camera" class="text-white w-6 h-6 mb-1"></i>
-                                    <span class="text-[10px] font-bold text-white uppercase tracking-wider">Alterar</span>
-                                </label>
-                                <input type="file" id="profile-photo-upload" accept="image/*" class="hidden" onchange="window.appActions.updateProfilePhoto(this)">
-                            </div>
-                            <div class="mb-2">
-                                <h2 class="text-3xl font-black text-white tracking-tight">${escapeHTML(userName) || 'Conta Visitante'}</h2>
-                                <p class="text-gray-400 font-medium text-sm mt-1 bg-[#222] px-3 py-1 rounded-full border border-[#333] inline-block">${escapeHTML(userEmail)}</p>
-                            </div>
-                        </div>
-
-                        <div class="space-y-6 bg-[#0a0a0a] p-8 rounded-2xl border border-[#222] shadow-inner">
-                            <div class="flex items-center gap-3 mb-6 border-b border-[#222] pb-4">
-                                <div class="w-10 h-10 bg-red-900/20 text-red-500 rounded-lg flex items-center justify-center"><i data-lucide="settings" class="w-5 h-5"></i></div>
-                                <div>
-                                    <h3 class="text-lg font-bold text-white">Configurações e Segurança</h3>
-                                    <p class="text-xs text-gray-500 font-medium">Gerencie suas credenciais de acesso.</p>
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-gray-400 mb-2 uppercase tracking-wider">Nome de Exibição Público</label>
-                                <input type="text" id="profile-name" value="${escapeHTML(userName)}" class="w-full bg-[#111] border border-[#333] rounded-xl p-3.5 text-white font-medium focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all outline-none" placeholder="Ex: Maria Souza" />
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-gray-400 mb-2 uppercase tracking-wider flex justify-between">
-                                    <span>Atualizar Senha</span>
-                                    <span class="text-gray-600 font-medium normal-case">(Deixe em branco se não quiser mudar)</span>
-                                </label>
-                                <input type="password" id="profile-password" class="w-full bg-[#111] border border-[#333] rounded-xl p-3.5 text-white focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all outline-none" placeholder="Nova senha forte..." />
-                            </div>
-
-                            <div class="pt-6 mt-4 border-t border-[#222] flex flex-col sm:flex-row gap-4 justify-between items-center">
-                                <button onclick="window.appActions.logout()" class="w-full sm:w-auto text-red-500 hover:text-white hover:bg-red-900 bg-red-950/20 border border-red-900/50 px-6 py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all uppercase tracking-wider text-xs">
-                                    <i data-lucide="log-out" class="w-4 h-4"></i> Encerrar Sessão
-                                </button>
-                                <button id="btn-save-profile" onclick="window.appActions.saveProfile()" class="w-full sm:w-auto bg-white text-black px-8 py-3 rounded-xl font-black flex items-center justify-center gap-2 hover:bg-gray-200 transition-all hover:-translate-y-0.5 shadow-lg uppercase tracking-wider text-xs">
-                                    <i data-lucide="save" class="w-4 h-4"></i> Salvar Modificações
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        const mInput = document.getElementById('selected-month');
-        if(mInput) {
-            mInput.addEventListener('change', function(e) { 
-                state.selectedMonth = e.target.value; 
-                updateYearOptions(); 
-                renderContent(); 
-            });
-            mInput.value = state.selectedMonth;
-        }
-
-        const yInput = document.getElementById('selected-year');
-        if(yInput) {
-            yInput.addEventListener('change', function(e) { 
-                state.selectedYear = e.target.value; 
-                renderContent(); 
-            });
-        }
-
-        function updateHeaderGreeting() {
-            if(!state.user) return;
-            const name = state.user.displayName || (state.user.isAnonymous ? 'Visitante' : 'Usuário Financeiro');
-            const firstName = name.split(' ')[0];
-            const greetingEl = document.getElementById('user-greeting');
-            const snEl = document.getElementById('sidebar-user-name');
-            if(greetingEl) {
-                greetingEl.innerHTML = `Logado como: <span class="font-bold text-white">${escapeHTML(firstName)}</span>`;
-                greetingEl.classList.remove('hidden');
-            }
-            if(snEl) {
-                snEl.innerText = name;
-            }
-            
-            const avatarInit = name.charAt(0).toUpperCase();
-            const saImg = document.getElementById('sidebar-avatar-img');
-            const saIni = document.getElementById('sidebar-avatar-initial');
-            
-            if(state.user.photoURL) {
-                if(saImg) { saImg.src = state.user.photoURL; saImg.classList.remove('hidden'); }
-                if(saIni) saIni.classList.add('hidden');
-            } else {
-                if(saIni) { saIni.innerText = avatarInit; saIni.classList.remove('hidden'); }
-                if(saImg) saImg.classList.add('hidden');
-            }
-        }
-
-        // Auto Login Ticker - Dispara caso haja um token nativo de ambiente
-        const initAuth = async () => {
-            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                try {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } catch(e) {
-                    console.error("Auto login token falhou:", e);
-                }
-            }
-        };
-        initAuth();
-
-        let unsubListeners = [];
-        onAuthStateChanged(auth, function(user) {
-            state.user = user;
-            const login = document.getElementById('login-screen');
-            const app = document.getElementById('app-screen');
-            
-            if(user) {
-                updateHeaderGreeting();
-                if(login) login.classList.add('opacity-0');
-                setTimeout(function() {
-                    if(login) login.classList.add('hidden'); 
-                    if(app) app.classList.remove('hidden');
-                    setTimeout(function() {
-                        if(app) app.classList.remove('opacity-0');
-                        renderNav();
-                        renderContent();
-                    }, 50);
-                }, 500);
-                
-                unsubListeners.forEach(function(fn) { fn(); }); 
-                unsubListeners = [];
-                
-                unsubListeners.push(onSnapshot(collection(db, 'artifacts', appId, 'users', user.uid, 'clients'), function(s) { 
-                    state.clients = s.docs.map(function(d) { return Object.assign({id: d.id}, d.data()); }); 
-                    updateYearOptions(); 
-                    renderContent(); 
-                }));
-                unsubListeners.push(onSnapshot(collection(db, 'artifacts', appId, 'users', user.uid, 'transactions'), function(s) { 
-                    state.transactions = s.docs.map(function(d) { return Object.assign({id: d.id}, d.data()); }); 
-                    renderContent(); 
-                }));
-                unsubListeners.push(onSnapshot(collection(db, 'artifacts', appId, 'users', user.uid, 'team'), function(s) { 
-                    state.team = s.docs.map(function(d) { return Object.assign({id: d.id}, d.data()); }); 
-                    renderContent(); 
-                }));
-                unsubListeners.push(onSnapshot(collection(db, 'artifacts', appId, 'users', user.uid, 'expenses'), function(s) { 
-                    state.expenses = s.docs.map(function(d) { return Object.assign({id: d.id}, d.data()); }); 
-                    renderContent(); 
-                }));
-                unsubListeners.push(onSnapshot(collection(db, 'artifacts', appId, 'users', user.uid, 'monthly_closures'), function(s) { 
-                    state.closures = s.docs.map(function(d) { return Object.assign({id: d.id}, d.data()); }); 
-                    updateYearOptions(); 
-                    renderContent(); 
-                }));
-            } else {
-                if(app) app.classList.add('opacity-0');
-                setTimeout(function() {
-                    if(app) app.classList.add('hidden'); 
-                    if(login) login.classList.remove('hidden');
-                    setTimeout(function() {
-                        if(login) login.classList.remove('opacity-0');
-                    }, 50);
-                }, 500);
-            }
-        });
-
-    </script>
-</body>
-</html>
+                            <button onclick="event.stopPropagation(); window.appActions.openItemModal('${escapeJS(member.id)}', 'equipe')" class="w-8 h-8 flex items-center justify-center bg-[#222] rounded-lg text-gray-400 hover:text-white hover:bg-[#333] transition-colors"><i data-lucide="edit-2" class="w-4 h-4"></i></button>
+                            <button onclick="event.stopPropagation(); window.appActions
